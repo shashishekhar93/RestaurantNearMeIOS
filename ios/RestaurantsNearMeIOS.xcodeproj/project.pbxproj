@@ -9,9 +9,13 @@
 /* Begin PBXBuildFile section */
 		0C80B921A6F3F58F76C31292 /* libPods-RestaurantsNearMeIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-RestaurantsNearMeIOS.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		555B1CBF62644B15981B805E /* inter_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7DDEC82929FD4A6396CEBAB0 /* inter_regular.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8581B9586E7A00E418B65900 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		8B38A7289D004F348FE27394 /* inter_semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19693511FDD0402BB6D7F3B9 /* inter_semibold.ttf */; };
+		E0E8D47BADF74C9EA0798B20 /* inter_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66C3DDD26F4D4AC9AE517995 /* inter_bold.ttf */; };
+		E93767CD7DA843A7B39C77D7 /* inter_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BCAEE24C9C644C99273D41B /* inter_medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,10 +23,14 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RestaurantsNearMeIOS/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RestaurantsNearMeIOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RestaurantsNearMeIOS/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		19693511FDD0402BB6D7F3B9 /* inter_semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = inter_semibold.ttf; path = ../src/assets/inter_semibold.ttf; sourceTree = "<group>"; };
+		2BCAEE24C9C644C99273D41B /* inter_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = inter_medium.ttf; path = ../src/assets/inter_medium.ttf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-RestaurantsNearMeIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestaurantsNearMeIOS.debug.xcconfig"; path = "Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-RestaurantsNearMeIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestaurantsNearMeIOS.release.xcconfig"; path = "Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-RestaurantsNearMeIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RestaurantsNearMeIOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		66C3DDD26F4D4AC9AE517995 /* inter_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = inter_bold.ttf; path = ../src/assets/inter_bold.ttf; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RestaurantsNearMeIOS/AppDelegate.swift; sourceTree = "<group>"; };
+		7DDEC82929FD4A6396CEBAB0 /* inter_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = inter_regular.ttf; path = ../src/assets/inter_regular.ttf; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RestaurantsNearMeIOS/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -60,6 +68,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2E2DF439E6E84B52A8956853 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2BCAEE24C9C644C99273D41B /* inter_medium.ttf */,
+				19693511FDD0402BB6D7F3B9 /* inter_semibold.ttf */,
+				7DDEC82929FD4A6396CEBAB0 /* inter_regular.ttf */,
+				66C3DDD26F4D4AC9AE517995 /* inter_bold.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +95,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				2E2DF439E6E84B52A8956853 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -161,6 +182,10 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				8581B9586E7A00E418B65900 /* PrivacyInfo.xcprivacy in Resources */,
+				E93767CD7DA843A7B39C77D7 /* inter_medium.ttf in Resources */,
+				8B38A7289D004F348FE27394 /* inter_semibold.ttf in Resources */,
+				555B1CBF62644B15981B805E /* inter_regular.ttf in Resources */,
+				E0E8D47BADF74C9EA0798B20 /* inter_bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,13 +216,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -234,13 +255,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

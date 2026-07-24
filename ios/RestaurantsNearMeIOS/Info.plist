@@ -34,7 +34,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>We need your location to show nearby restaurants and local offers.</string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -56,5 +56,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>inter_medium.ttf</string>
+		<string>inter_semibold.ttf</string>
+		<string>inter_regular.ttf</string>
+		<string>inter_bold.ttf</string>
+	</array>
 </dict>
 </plist>
