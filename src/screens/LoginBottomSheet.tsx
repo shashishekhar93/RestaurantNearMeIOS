@@ -11,6 +11,11 @@ import {
 } from 'react-native';
 import AppText from '../component/AppText';
 import { Colors, Fonts, Radius, Spacing, Typography } from '../theme';
+import { SvgProps } from 'react-native-svg';
+type IconProps = {
+  focused: boolean;
+  icon: React.FC<SvgProps>;
+};
 
 // Define the props for the LoginBottomSheet component
 type LoginBottomSheetProps = {
@@ -68,64 +73,67 @@ const LoginBottomSheet = ({ isVisible, onClose }: LoginBottomSheetProps) => {
         {/* Animated bottom sheet container */}
         <Animated.View
           style={[
-            styles.bottomSheet,
+            styles.bottomSheetWrapper,
             {
               transform: [{ translateY }],
             },
           ]}>
-          {/* Header section with close button */}
-          <View style={styles.header}>
-            <View style={styles.headerSpacer} />
-            {/* Close button */}
-            <TouchableOpacity
-              style={styles.closeButton}
-              activeOpacity={0.8}
-              onPress={handleClose}>
-              <AppText style={styles.closeIcon}>✕</AppText>
-            </TouchableOpacity>
-          </View>
+          {/* Close button - POSITIONED JUST ABOVE THE SHEET */}
+          <TouchableOpacity
+            style={styles.closeButton}
+            activeOpacity={0.8}
+            onPress={handleClose}>
+            <AppText style={styles.closeIcon}>✕</AppText>
+          </TouchableOpacity>
 
-          {/* Content section */}
-          <View style={styles.content}>
-            {/* Icon/Illustration placeholder */}
-            <Image style={styles.iconEmoji} source={require('../assets/icons/ic_phone.png')} />
+          {/* Bottom sheet container */}
+          <View style={styles.bottomSheet}>
+            {/* Content section */}
+            <View style={styles.content}>
+              {/* Icon/Illustration placeholder */}
+              <Image style={styles.iconEmoji} source={require('../assets/icons/ic_phone.png')} />
 
-            {/* Title */}
-            <AppText style={styles.title}>Enter the mobile number</AppText>
+              {/* Title */}
+              <AppText style={styles.title}>Enter the mobile number</AppText>
 
-            {/* Description text */}
-            <AppText style={styles.description}>
-              This number will be used for all kinds of communication purposes
-              whether via SMS, WhatsApp, etc.
-            </AppText>
+              {/* Description text */}
+              <AppText style={styles.description}>
+                This number will be used for all kinds of communication purposes
+                whether via SMS, WhatsApp, etc.
+              </AppText>
 
-            {/* Mobile number input section */}
-            <View style={styles.inputContainer}>
-              {/* Country code dropdown */}
-              <View style={styles.countryCodeSection}>
-                <AppText style={styles.countryFlag}>🇮🇳</AppText>
-                <AppText style={styles.countryCode}>+91</AppText>
-                <AppText style={styles.dropdownArrow}>▼</AppText>
+              {/* Mobile number input section */}
+              <View style={styles.inputContainer}>
+                {/* Country code dropdown */}
+                <View style={styles.countryCodeSection}>
+                  <AppText style={styles.countryFlag}>🇮🇳</AppText>
+                  <AppText style={styles.countryCode}>+91</AppText>
+                  <IconProps
+                  width={16}
+                  height={16}
+                  uri={require('../assets/icons/ic_dropdown.svg')}
+                />
+                </View>
+
+                {/* Mobile number text input */}
+                <TextInput
+                  style={styles.mobileInput}
+                  placeholder="Mobile number"
+                  placeholderTextColor={Colors.neutral400}
+                  keyboardType="phone-pad"
+                  value={mobileNumber}
+                  onChangeText={setMobileNumber}
+                  maxLength={10}
+                />
               </View>
 
-              {/* Mobile number text input */}
-              <TextInput
-                style={styles.mobileInput}
-                placeholder="Mobile number"
-                placeholderTextColor={Colors.neutral400}
-                keyboardType="phone-pad"
-                value={mobileNumber}
-                onChangeText={setMobileNumber}
-                maxLength={10}
-              />
+              {/* Continue button */}
+              <TouchableOpacity
+                style={styles.continueButton}
+                activeOpacity={0.8}>
+                <AppText style={styles.continueButtonText}>Continue</AppText>
+              </TouchableOpacity>
             </View>
-
-            {/* Continue button */}
-            <TouchableOpacity
-              style={styles.continueButton}
-              activeOpacity={0.8}>
-              <AppText style={styles.continueButtonText}>Continue</AppText>
-            </TouchableOpacity>
           </View>
         </Animated.View>
       </View>
@@ -140,46 +148,42 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
   },
-  // Bottom sheet container
-  bottomSheet: {
-    backgroundColor: Colors.white,
-    borderTopLeftRadius: Radius.xl,
-    borderTopRightRadius: Radius.xl,
-    paddingBottom: Spacing.xl,
-    maxHeight: '85%',
+  // Wrapper for the entire animated view (sheet + close button together)
+  bottomSheetWrapper: {
+    alignItems: 'flex-end',
+    backgroundColor: 'transparent',
   },
-  // Header area with close button
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: Spacing.lg,
-    paddingTop: Spacing.md,
-    paddingBottom: Spacing.sm,
-  },
-  // Spacer to push close button to the right
-  headerSpacer: {
-    flex: 1,
-  },
-  // Close button styling
+  // Close button styling - POSITIONED JUST ABOVE THE SHEET
   closeButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: Colors.white,
+    width: 48,
+    height: 48,
+    borderRadius: 28,
+    backgroundColor: Colors.neutral50,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 8,
+    marginRight: 4, // Align with the right edge of the sheet
+    marginBottom: 12, // Negative margin to make it overlap with the sheet
+    zIndex: 100, // Ensure it's on top
   },
   // Close button icon
   closeIcon: {
-    fontSize: 24,
+    fontSize: 22,
     color: Colors.neutral900,
     fontFamily: Fonts.interBold,
+  },
+  // Bottom sheet container
+  bottomSheet: {
+    backgroundColor: Colors.mainBackground,
+    borderTopLeftRadius: Radius.xl,
+    borderTopRightRadius: Radius.xl,
+    paddingBottom: Spacing.xl,
+    maxHeight: '100%',
+    width: '100%',
   },
   // Content container with padding
   content: {
@@ -214,16 +218,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.neutral50,
     marginBottom: Spacing.lg,
-    paddingVertical: Spacing.sm,
+    paddingVertical: Spacing.md,
   },
   // Country code section styling
   countryCodeSection: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.neutral50,
+    borderRadius: 12,
+    paddingHorizontal: Spacing.md,
+    height: 56,
     marginRight: Spacing.md,
-    paddingRight: Spacing.md,
-    borderRightWidth: 1,
-    borderRightColor: Colors.neutral50,
   },
   // Country flag emoji
   countryFlag: {
@@ -245,11 +251,13 @@ const styles = StyleSheet.create({
   // Mobile number text input styling
   mobileInput: {
     flex: 1,
+    height: 56,
+    backgroundColor: Colors.neutral50,
+    borderRadius: 12,
+    paddingHorizontal: Spacing.md,
     fontSize: Typography.body,
     fontFamily: Fonts.interRegular,
     color: Colors.black,
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.sm,
   },
   // Continue button styling
   continueButton: {
