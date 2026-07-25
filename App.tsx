@@ -1,38 +1,34 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
+ * Restaurants Near Me Onboarding
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React, {useState} from 'react';
+import {StatusBar, StyleSheet} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+
+import OnBoardingScreen from './src/screens/OnboardingScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
+
+type AppScreen = 'onboarding' | 'signup';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [currentScreen, setCurrentScreen] = useState<AppScreen>('onboarding');
+
+  const handleGetStarted = () => {
+    // "When the user taps Get Started, open the Sign Up flow."
+    setCurrentScreen('signup');
+  };
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      {currentScreen === 'onboarding' ? (
+        <OnBoardingScreen onGetStarted={handleGetStarted} />
+      ) : (
+        <SignUpScreen />
+      )}
     </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
   );
 }
 
