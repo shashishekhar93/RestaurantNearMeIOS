@@ -15,7 +15,7 @@ import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Colors, Fonts, Radius, Spacing, Typography} from '../theme';
 import Geolocation, {GeolocationResponse} from '@react-native-community/geolocation';
 // Change this import - use Image instead of importing SVG directly
-// import LocationIcon from '../assets/icons/ic_location.svg';
+import LocationIcon from '../assets/icons/ic_location.svg';
 
 type PermissionStatus = 'idle' | 'checking' | 'granted' | 'denied' | 'blocked' | 'limited';
 
@@ -179,10 +179,7 @@ const SignUpScreen = () => {
           <View style={styles.screenContent}>
             <View style={styles.centerBlock}>
               <View style={styles.permissionCircle}>
-                <Image 
-                  source={require('../assets/icons/ic_location.svg')} 
-                  style={styles.locationIcon} 
-                />
+                <LocationIcon />
               </View>
               <AppText style={styles.permissionTitle}>Find what’s near you</AppText>
               <AppText style={styles.permissionDescription}>
