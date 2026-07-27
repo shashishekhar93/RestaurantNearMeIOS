@@ -11,11 +11,8 @@ import {
 } from 'react-native';
 import AppText from '../component/AppText';
 import { Colors, Fonts, Radius, Spacing, Typography } from '../theme';
-import { SvgProps } from 'react-native-svg';
-type IconProps = {
-  focused: boolean;
-  icon: React.FC<SvgProps>;
-};
+import DropdownIcon from '../assets/icons/ic_dropdown.svg';
+
 
 // Define the props for the LoginBottomSheet component
 type LoginBottomSheetProps = {
@@ -108,11 +105,11 @@ const LoginBottomSheet = ({ isVisible, onClose }: LoginBottomSheetProps) => {
                 <View style={styles.countryCodeSection}>
                   <AppText style={styles.countryFlag}>🇮🇳</AppText>
                   <AppText style={styles.countryCode}>+91</AppText>
-                  <IconProps
-                  width={16}
-                  height={16}
-                  uri={require('../assets/icons/ic_dropdown.svg')}
-                />
+                <DropdownIcon
+  width={16}
+  height={16}
+  fill={Colors.neutral600}
+/>
                 </View>
 
                 {/* Mobile number text input */}
