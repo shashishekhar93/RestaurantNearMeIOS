@@ -4,6 +4,7 @@ const Radius = {
   md: 12,
   lg: 16,
   xl: 24,
+  rounded:55,
   round: 999,
 };
 

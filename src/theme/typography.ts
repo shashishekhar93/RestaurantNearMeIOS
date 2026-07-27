@@ -10,6 +10,7 @@ const Typography = {
   caption: 14,
 
   small: 12,
+  extraSmall: 10,
 };
 
 export default Typography;

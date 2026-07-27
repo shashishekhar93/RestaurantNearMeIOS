@@ -18,9 +18,10 @@ import LoginBottomSheet from './LoginBottomSheet';
 
 type OnboardingScreenProps = {
   onGetStarted: () => void;
+  onLoginSuccess: () => void;
 };
 
-const OnboardingScreen = ({onGetStarted}: OnboardingScreenProps) => {
+const OnboardingScreen = ({onGetStarted, onLoginSuccess}: OnboardingScreenProps) => {
   const insets = useSafeAreaInsets();
   const [selectedIndex, setSelectedIndex] = useState(0);
   // State to control the visibility of the login bottom sheet
@@ -99,6 +100,7 @@ const OnboardingScreen = ({onGetStarted}: OnboardingScreenProps) => {
       <LoginBottomSheet 
         isVisible={isLoginSheetVisible} 
         onClose={handleCloseLoginSheet}
+        onLoginSuccess={onLoginSuccess}
       />
     </SafeAreaView>
   );

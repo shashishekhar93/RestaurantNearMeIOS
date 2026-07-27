@@ -19,7 +19,11 @@ import LocationIcon from '../assets/icons/ic_location.svg';
 
 type PermissionStatus = 'idle' | 'checking' | 'granted' | 'denied' | 'blocked' | 'limited';
 
-const SignUpScreen = () => {
+type SignUpScreenProps = {
+  onSignedIn: () => void;
+};
+
+const SignUpScreen = ({onSignedIn}: SignUpScreenProps) => {
   const insets = useSafeAreaInsets();
   const [step, setStep] = useState<'location' | 'registration'>('location');
   const [fullName, setFullName] = useState('');
@@ -245,7 +249,7 @@ const SignUpScreen = () => {
                   keyboardType="number-pad"
                 />
               </View>
-              <TouchableOpacity style={styles.primaryButton} activeOpacity={0.8}>
+              <TouchableOpacity style={styles.primaryButton} activeOpacity={0.8} onPress={onSignedIn}>
                 <AppText style={styles.primaryButtonText}>Create account</AppText>
               </TouchableOpacity>
               <AppText style={styles.loginText}>

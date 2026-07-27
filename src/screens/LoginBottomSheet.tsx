@@ -18,9 +18,10 @@ import DropdownIcon from '../assets/icons/ic_dropdown.svg';
 type LoginBottomSheetProps = {
   isVisible: boolean; // Controls whether the bottom sheet is visible
   onClose: () => void; // Callback function when close button is pressed
+  onLoginSuccess: () => void; // Called when login succeeds
 };
 
-const LoginBottomSheet = ({ isVisible, onClose }: LoginBottomSheetProps) => {
+const LoginBottomSheet = ({ isVisible, onClose, onLoginSuccess }: LoginBottomSheetProps) => {
   // Animation value for the slide-up effect
   const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -123,7 +124,8 @@ const LoginBottomSheet = ({ isVisible, onClose }: LoginBottomSheetProps) => {
               {/* Continue button */}
               <TouchableOpacity
                 style={styles.continueButton}
-                activeOpacity={0.8}>
+                activeOpacity={0.8}
+                onPress={onLoginSuccess}>
                 <AppText style={styles.continueButtonText}>Continue</AppText>
               </TouchableOpacity>
             </View>
