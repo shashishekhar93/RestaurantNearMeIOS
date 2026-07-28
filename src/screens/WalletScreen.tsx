@@ -55,24 +55,31 @@ const WalletScreen = ({onBack, navigation}: Props) => {
   );
 
   return (
-    <AppScreen style={styles.container}>
+    <AppScreen
+      edges={['top', 'left', 'right']}
+      style={styles.container}>
       {/* Top bar with back button */}
-      <View style={styles.topBar}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            // If parent provided a specific onBack handler use it,
-            // otherwise fallback to navigation.goBack()
-            if (onBack) return onBack();
-            if (navigation && navigation.goBack) return navigation.goBack();
-          }}
-          activeOpacity={0.8}>
-          <BackIcon width={16} height={16} stroke={Colors.neutral900} fill="none" />
-        </TouchableOpacity>
-      </View>
+      <View style={styles.header}>
+  <View style={styles.headerTopRow}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.backButton}
+      onPress={() => {
+        if (onBack) return onBack();
+        if (navigation && navigation.goBack) return navigation.goBack();
+      }}>
+      <BackIcon />
+    </TouchableOpacity>
+  </View>
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <AppText style={styles.screenTitle}>Wallet</AppText>
+  <AppText style={styles.screenTitle}>
+    Wallet
+  </AppText>
+</View>
+
+<ScrollView
+  contentContainerStyle={styles.content}
+  showsVerticalScrollIndicator={false}>
 
         {/* Big wallet amount card */}
         <View style={styles.walletCardTop}>
@@ -117,7 +124,16 @@ const WalletScreen = ({onBack, navigation}: Props) => {
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: Colors.mainBackground},
-  topBar: {paddingHorizontal: Spacing.lg, paddingTop: Spacing.lg, marginBottom: Spacing.md},
+  header: {
+  paddingHorizontal: Spacing.lg,
+  marginBottom: Spacing.lg,
+},
+
+headerTopRow: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+},
   backButton: {
     width: 40,
     height: 40,
@@ -131,14 +147,16 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 3,
   },
-  content: {padding: Spacing.lg, paddingBottom: Spacing.xxl},
+  content: {
+  paddingHorizontal: Spacing.lg,
+  paddingBottom: Spacing.xxl,
+},
   screenTitle: {
-    fontSize: Typography.h1,
-    fontFamily: Fonts.interBold,
-    color: Colors.neutral900,
-    marginTop: Spacing.md,
-    marginBottom: Spacing.lg,
-  },
+  marginTop: Spacing.md,
+  fontSize: Typography.h1,
+  fontFamily: Fonts.interBold,
+  color: Colors.neutral900,
+},
   walletCardTop: {
     backgroundColor: Colors.primary600,
     borderRadius: Radius.lg,
@@ -172,10 +190,10 @@ const styles = StyleSheet.create({
     shadowRadius: 18,
     elevation: 4,
   },
-  txRow: {flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: Spacing.sm},
+  txRow: {flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: Spacing.lg},
   txLeft: {flexDirection: 'row', alignItems: 'center'},
   txTitle: {fontFamily: Fonts.interSemiBold, color: Colors.neutral900},
-  txSubtitle: {fontFamily: Fonts.interRegular, color: Colors.neutral600, fontSize: Typography.caption},
+  txSubtitle: {fontFamily: Fonts.interRegular, color: Colors.neutral600, fontSize: Typography.small},
   txAmount: {fontFamily: Fonts.interSemiBold},
   positive: {color: Colors.success600 || '#2A8A45'},
   negative: {color: Colors.neutral700},
