@@ -100,7 +100,10 @@ const OnboardingScreen = ({onGetStarted, onLoginSuccess}: OnboardingScreenProps)
       <LoginBottomSheet 
         isVisible={isLoginSheetVisible} 
         onClose={handleCloseLoginSheet}
-        onLoginSuccess={onLoginSuccess}
+        onLoginSuccess={() => {
+          setIsLoginSheetVisible(false);
+          setTimeout(onLoginSuccess, 0);
+        }}
       />
     </SafeAreaView>
   );

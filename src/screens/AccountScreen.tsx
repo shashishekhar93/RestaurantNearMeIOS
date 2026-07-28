@@ -1,13 +1,14 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, ScrollView} from 'react-native';
+import AppScreen from '../component/AppScreen/AppScreen';
 import AppText from '../component/AppText/AppText';
 import {Colors, Fonts, Radius, Spacing, Typography} from '../theme';
-import AccountIcon from '../assets/icons/ic_account.svg';
 import AddressesIcon from '../assets/icons/ic_addresses.svg';
 import HelpAndFaq from '../assets/icons/ic_faq.svg';
 import ArrowForward from '../assets/icons/ic_arrow_forward.svg';
 import WalletIcon from '../assets/icons/ic_wallet.svg';
 import PersonalInfoIcon from '../assets/icons/ic_personalinfo.svg';
+import MainLayout from '../component/MainLayout';
 
 const rewards = [
   {
@@ -30,9 +31,14 @@ const accountItems = [
   {label: 'Help & FAQ', Icon: HelpAndFaq},
 ];
 
-const AccountScreen = () => {
+// Props for AccountScreen. ParentScreen will pass `onOpenWallet` to show the WalletScreen.
+type Props = {
+  onOpenWallet?: () => void;
+};
+
+const AccountScreen = ({onOpenWallet}: Props) => {
   return (
-    <View style={styles.container}>
+    <MainLayout>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
@@ -90,7 +96,8 @@ const AccountScreen = () => {
           </View>
           <View style={styles.walletAmountRow}>
             <AppText style={styles.walletAmount}>₹24.50</AppText>
-            <TouchableOpacity activeOpacity={0.8}>
+            {/* Call the parent's onOpenWallet when user taps Add Money */}
+            <TouchableOpacity activeOpacity={0.8} onPress={() => onOpenWallet && onOpenWallet()}>
               <AppText style={styles.addMoneyText}>Add Money</AppText>
             </TouchableOpacity>
           </View>
@@ -127,17 +134,14 @@ const AccountScreen = () => {
           <AppText style={styles.logoutText}>Log Out</AppText>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </MainLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: Spacing.lg,
-    flex: 1,
-  },
   scrollContent: {
-    paddingBottom: Spacing.xxl,
+    paddingHorizontal: Spacing.lg,
+    paddingBottom:Spacing.xxxxl,
   },
   screenTitle: {
     fontSize: Typography.h1,
@@ -342,8 +346,9 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     color: Colors.primary600,
-    fontSize: Typography.body,
+    fontSize: Typography.h3,
     fontFamily: Fonts.interSemiBold,
+    marginBottom: Spacing.xxxl,
   },
 });
 

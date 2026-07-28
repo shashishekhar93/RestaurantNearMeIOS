@@ -1426,6 +1426,30 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - react-native-config (1.6.1):
+    - react-native-config/App (= 1.6.1)
+  - react-native-config/App (1.6.1):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
   - react-native-geolocation (3.4.0):
     - hermes-engine
     - RCTRequired
@@ -1937,6 +1961,50 @@ PODS:
     - React-utils (= 0.86.0)
     - ReactNativeDependencies
   - ReactNativeDependencies (0.86.0)
+  - RNGestureHandler (2.32.0):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
+  - RNKeychain (10.0.0):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
   - RNScreens (4.26.2):
     - hermes-engine
     - RCTRequired
@@ -2073,6 +2141,7 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - React-mutationobservernativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver`)
+  - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -2111,6 +2180,8 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios/ReactCodegen`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeDependencies (from `../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -2199,6 +2270,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
   React-mutationobservernativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver"
+  react-native-config:
+    :path: "../node_modules/react-native-config"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-pager-view:
@@ -2275,6 +2348,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeDependencies:
     :podspec: "../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
+  RNKeychain:
+    :path: "../node_modules/react-native-keychain"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
@@ -2322,6 +2399,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: ce449ccdf3b80384415b925606be8a4bdcfc65d3
   React-microtasksnativemodule: 2eb3f49d0d8e77b5343455eccd057010b8d38b6b
   React-mutationobservernativemodule: f0a0d5ae9b51caf7becbeabf836d716cfedb6bf2
+  react-native-config: 6188f674e4f4b3bdfd43c22886fb04f3103793ff
   react-native-geolocation: c41d1ad8e832fa800b4e457c721e348bcc5aa147
   react-native-pager-view: 6b98421fc9198e59349977100dc252bbd979cc16
   react-native-safe-area-context: fb5c8ee9f6dd62ef710611b3d370c501f42a4ac0
@@ -2360,6 +2438,8 @@ SPEC CHECKSUMS:
   ReactCodegen: afe0d436ee089d7bea6418429d8312b1d23a6801
   ReactCommon: d5c1bb4427bf51c443de5926aac332c89ddd9363
   ReactNativeDependencies: fa0a54b3f5319ae0e3b9aff32bfee7a424b88e66
+  RNGestureHandler: 92172e79df6e88e0e93b6341f9dcd8b5a02746ba
+  RNKeychain: 6778b35b5bd067c322f8479526ac09b1d61f31d0
   RNScreens: 7118cd7715c226856125b5bece3c4d9abec90356
   RNSVG: 6cae8d4082913be2eb43eaec2a456222c42195ed
   SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
