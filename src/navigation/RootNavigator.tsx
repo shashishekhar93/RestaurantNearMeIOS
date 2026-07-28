@@ -10,8 +10,8 @@ import WalletScreen from '../screens/WalletScreen';
 import type {RootStackParamList} from './types';
 import AppText from '../component/AppText';
 import NotificationScreen from '../screens/notification/NotificationScreen';
+import RewardScreen from '../screens/Rewards/RewardScreen';
 const RootStack = createNativeStackNavigator<RootStackParamList>();
-
 type SplashScreenProps = NativeStackScreenProps<RootStackParamList, 'SplashScreen'>;
 type OnboardingRouteProps = NativeStackScreenProps<RootStackParamList, 'OnboardingScreen'>;
 type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
@@ -92,6 +92,7 @@ const RootNavigator = () => {
         <RootStack.Screen name="LocationPermissionScreen" component={LocationPermissionScreenRoute} />
         <RootStack.Screen name="Wallet" component={WalletScreen} />
         <RootStack.Screen name="Notification" component={NotificationScreen} />
+        <RootStack.Screen name="Reward" component={RewardScreen} />
         <RootStack.Screen name="BottomTabs" component={BottomTabNavigator} />
       </RootStack.Navigator>
     </NavigationContainer>

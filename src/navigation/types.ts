@@ -11,6 +11,7 @@ export type RootStackParamList = {
   BottomTabs: undefined;
   Wallet: undefined;
   Notification: undefined;
+  Reward: undefined;
 };
 
 // The tab bar only exposes the five main sections requested by the app.

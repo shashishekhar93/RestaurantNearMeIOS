@@ -33,9 +33,10 @@ const accountItems = [
 // Props for AccountScreen. ParentScreen will pass `onOpenWallet` to show the WalletScreen.
 type Props = {
   onOpenWallet?: () => void;
+  onOpenRewards?: () => void;
 };
 
-const AccountScreen = ({onOpenWallet}: Props) => {
+const AccountScreen = ({onOpenWallet, onOpenRewards}: Props) => {
   return (
     <MainLayout>
       <ScrollView
@@ -59,7 +60,9 @@ const AccountScreen = ({onOpenWallet}: Props) => {
         {/* Rewards block with two cards */}
         <View style={styles.sectionHeader}>
           <AppText style={styles.sectionTitle}>Your Rewards</AppText>
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => onOpenRewards?.()}>
             <AppText style={styles.viewAllText}>View All</AppText>
           </TouchableOpacity>
         </View>

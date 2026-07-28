@@ -10,6 +10,7 @@ const AccountScreenRoute = ({navigation}: any) => {
   return (
     <AccountScreen
       onOpenWallet={() => navigation.getParent()?.navigate('Wallet')}
+      onOpenRewards={() => navigation.getParent()?.navigate('Reward')}
     />
   );
 };
