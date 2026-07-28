@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: Colors.white,
     borderRadius: Radius.xl,
-    padding: Spacing.lg,
+    padding: Spacing.md,
     marginBottom: Spacing.md,
 
     shadowColor: Colors.neutral600,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: Colors.neutral900,
     fontFamily: Fonts.interBold,
-    fontSize: Typography.body,
+    fontSize: Typography.caption,
     marginRight: Spacing.sm,
   },
 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     marginTop: Spacing.xs,
     color: Colors.neutral600,
     fontFamily: Fonts.interRegular,
-    fontSize: Typography.caption,
+    fontSize: Typography.extraSmall,
     lineHeight: 20,
   },
 

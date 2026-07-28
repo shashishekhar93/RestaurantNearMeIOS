@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, ScrollView} from 'react-native';
-import AppScreen from '../component/AppScreen/AppScreen';
 import AppText from '../component/AppText/AppText';
 import {Colors, Fonts, Radius, Spacing, Typography} from '../theme';
 import AddressesIcon from '../assets/icons/ic_addresses.svg';
