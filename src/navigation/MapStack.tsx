@@ -38,7 +38,10 @@ const RestaurantDetailsScreen = () => {
 const MapStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Map" component={MapScreen} />
+      <Stack.Screen
+        name="MapScreen"
+        component={MapScreen}
+      />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="RestaurantDetails" component={RestaurantDetailsScreen} />
     </Stack.Navigator>

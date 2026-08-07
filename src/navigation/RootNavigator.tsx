@@ -17,23 +17,47 @@ type OnboardingRouteProps = NativeStackScreenProps<RootStackParamList, 'Onboardi
 type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 type OTPScreenProps = NativeStackScreenProps<RootStackParamList, 'OTPScreen'>;
 type LocationPermissionScreenProps = NativeStackScreenProps<RootStackParamList, 'LocationPermissionScreen'>;
+import VerifyOtpScreen from '../screens/loginFlow/VerifyOtpScreen';
+import {SessionManager} from '../utils/SessionManager';
 
 // SplashScreen shows a short loading state before moving to onboarding.
 const SplashScreen = ({navigation}: SplashScreenProps) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.replace('OnboardingScreen');
-    }, 1200);
+    checkLogin();
+  }, []);
+  const checkLogin = async () => {
+      await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1200);
+});
 
-    return () => clearTimeout(timer);
-  }, [navigation]);
+    const token =
+      await SessionManager.getToken();
+    if (token) {
+      navigation.replace('BottomTabs');
+    } else {
+      navigation.replace('OnboardingScreen');
+    }
+  };
 
   return (
+
     <View style={styles.centeredContainer}>
-      <AppText style={styles.logoText}>Restaurants Near Me</AppText>
-      <ActivityIndicator size="large" color={Colors.primary600} />
+
+      <AppText style={styles.logoText}>
+        Restaurants Near Me
+      </AppText>
+
+      <ActivityIndicator
+        size="large"
+        color={Colors.primary600}
+      />
+
     </View>
+
   );
+
 };
 
 // The onboarding screen remains unchanged in UI and simply routes the user to
@@ -57,20 +81,6 @@ const LoginScreenRoute = ({navigation}: LoginScreenProps) => {
   );
 };
 
-// OTP is a placeholder step to keep the authentication flow explicit and future-proof.
-const OTPScreenRoute = ({navigation, route}: OTPScreenProps) => {
-  return (
-    <View style={styles.centeredContainer}>
-      <AppText style={styles.title}>Verify OTP</AppText>
-      <AppText style={styles.description}>
-        {route.params?.phoneNumber ? `Code sent to ${route.params.phoneNumber}` : 'A one-time password is being verified.'}
-      </AppText>
-      <AppText style={styles.actionText} onPress={() => navigation.navigate('LocationPermissionScreen')}>
-        Continue to location permission
-      </AppText>
-    </View>
-  );
-};
 
 // LocationPermissionScreen reuses the existing location flow without changing its UI.
 const LocationPermissionScreenRoute = ({navigation}: LocationPermissionScreenProps) => {
@@ -88,7 +98,7 @@ const RootNavigator = () => {
         <RootStack.Screen name="SplashScreen" component={SplashScreen} />
         <RootStack.Screen name="OnboardingScreen" component={OnboardingScreenRoute} />
         <RootStack.Screen name="LoginScreen" component={LoginScreenRoute} />
-        <RootStack.Screen name="OTPScreen" component={OTPScreenRoute} />
+        <RootStack.Screen name="OTPScreen" component={VerifyOtpScreen} />
         <RootStack.Screen name="LocationPermissionScreen" component={LocationPermissionScreenRoute} />
         <RootStack.Screen name="Wallet" component={WalletScreen} />
         <RootStack.Screen name="Notification" component={NotificationScreen} />

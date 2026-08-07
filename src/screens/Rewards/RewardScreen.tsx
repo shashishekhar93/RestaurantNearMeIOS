@@ -10,7 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import AppScreen from '../../component/AppScreen/AppScreen';
-import AppText from '../../component/AppText/AppText';
+import AppText from '../../component/AppText';
 
 import BackIcon from '../../assets/icons/ic_back.svg';
 

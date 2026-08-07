@@ -1,3 +1,3 @@
-import AppText from './AppText';
+import AppText from '../../component/AppText/AppText';
 
 export default AppText;

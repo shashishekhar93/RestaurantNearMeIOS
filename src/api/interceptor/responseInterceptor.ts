@@ -1,11 +1,28 @@
-import { AxiosError, AxiosResponse } from "axios";
+import {
+AxiosError,
+AxiosResponse,
+} from 'axios';
 
-export const responseInterceptor = (
-    response : AxiosResponse,
-)=>response;
+export const responseInterceptor =
 
-export const responseErrorInterceptor = (
-    error:AxiosError,
-)=>{
-    return Promise.reject(error)
+(
+response: AxiosResponse,
+) => response;
+
+export const responseErrorInterceptor =
+
+async (
+
+error: AxiosError,
+
+) => {
+
+if (error.response?.status === 401) {
+
+    // logout later
+
 }
+
+return Promise.reject(error);
+
+};

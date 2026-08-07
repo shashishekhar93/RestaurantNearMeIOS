@@ -7,7 +7,7 @@ import {
   FlatList,
 } from 'react-native';
 import AppScreen from '../component/AppScreen/AppScreen';
-import AppText from '../component/AppText/AppText';
+import AppText from '../component/AppText';
 import {Colors, Fonts, Radius, Spacing, Typography} from '../theme';
 import BackIcon from '../assets/icons/ic_back.svg';
 import RewardIcon from '../assets/icons/ic_reward.svg';

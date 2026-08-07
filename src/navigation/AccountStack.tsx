@@ -46,7 +46,7 @@ const HelpFAQScreen = () => {
 const AccountStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Account" component={AccountScreenRoute} />
+      <Stack.Screen name="AccountScreen" component={AccountScreenRoute} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       <Stack.Screen name="SavedAddresses" component={SavedAddressesScreen} />
       <Stack.Screen name="HelpFAQ" component={HelpFAQScreen} />

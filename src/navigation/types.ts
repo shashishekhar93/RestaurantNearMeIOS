@@ -26,31 +26,34 @@ export type BottomTabParamList = {
 // Each tab is backed by its own stack so future screens can be pushed without
 // mixing routes between tabs.
 export type HomeStackParamList = {
-  Home: undefined;
-  RestaurantDetails: {restaurantId?: string; name?: string} | undefined;
+  HomeScreen: undefined;
+  RestaurantDetails: {
+    restaurantId?: string;
+    name?: string;
+  } | undefined;
   Search: undefined;
 };
 
 export type MapStackParamList = {
-  Map: undefined;
+  MapScreen: undefined;
   Search: undefined;
   RestaurantDetails: {restaurantId?: string; name?: string} | undefined;
 };
 
 export type FavoritesStackParamList = {
-  Favorites: undefined;
+  FavoritesScreen: undefined;
   RestaurantDetails: {restaurantId?: string; name?: string} | undefined;
   Search: undefined;
 };
 
 export type ReservationStackParamList = {
-  Reservations: undefined;
+  ReservationsScreen: undefined;
   BookingDetails: {bookingId?: string} | undefined;
   Search: undefined;
 };
 
 export type AccountStackParamList = {
-  Account: undefined;
+  AccountScreen: undefined;
   EditProfile: undefined;
   SavedAddresses: undefined;
   HelpFAQ: undefined;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, ScrollView} from 'react-native';
-import AppText from '../component/AppText/AppText';
+import AppText from '../component/AppText';
 import {Colors, Fonts, Radius, Spacing, Typography} from '../theme';
 import AddressesIcon from '../assets/icons/ic_addresses.svg';
 import HelpAndFaq from '../assets/icons/ic_faq.svg';
@@ -8,6 +8,9 @@ import ArrowForward from '../assets/icons/ic_arrow_forward.svg';
 import WalletIcon from '../assets/icons/ic_wallet.svg';
 import PersonalInfoIcon from '../assets/icons/ic_personalinfo.svg';
 import MainLayout from '../component/MainLayout';
+import {Alert} from 'react-native';
+import {SessionManager} from '../utils/SessionManager';
+import {useNavigation, CommonActions} from '@react-navigation/native';
 
 const rewards = [
   {
@@ -36,7 +39,49 @@ type Props = {
   onOpenRewards?: () => void;
 };
 
+
 const AccountScreen = ({onOpenWallet, onOpenRewards}: Props) => {
+
+  const navigation = useNavigation<any>();
+
+  const logout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await SessionManager.logout();
+
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [
+                    {
+                      name: 'OnboardingScreen',
+                    },
+                  ],
+                }),
+              );
+            } catch {
+              Alert.alert(
+                'Error',
+                'Unable to logout.',
+              );
+            }
+          },
+        },
+      ],
+    );
+  };
+
   return (
     <MainLayout>
       <ScrollView
@@ -132,13 +177,14 @@ const AccountScreen = ({onOpenWallet, onOpenRewards}: Props) => {
             ))}
         </View>
 
-        <TouchableOpacity style={styles.logoutButton} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.logoutButton} activeOpacity={0.8} onPress={logout}>
           <AppText style={styles.logoutText}>Log Out</AppText>
         </TouchableOpacity>
       </ScrollView>
     </MainLayout>
   );
 };
+
 
 const styles = StyleSheet.create({
   scrollContent: {

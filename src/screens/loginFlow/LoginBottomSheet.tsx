@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,9 +9,12 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import AppText from '../component/AppText';
-import { Colors, Fonts, Radius, Spacing, Typography } from '../theme';
-import DropdownIcon from '../assets/icons/ic_dropdown.svg';
+import AppText from '../../component/AppText';
+import { Colors, Fonts, Radius, Spacing, Typography } from '../../theme';
+import DropdownIcon from '../../assets/icons/ic_dropdown.svg';
+import authRepository from '../../api/repository/authRepository';
+import { useNavigation } from '@react-navigation/native';
+import {Alert} from 'react-native';
 
 
 // Define the props for the LoginBottomSheet component
@@ -24,9 +27,11 @@ type LoginBottomSheetProps = {
 const LoginBottomSheet = ({ isVisible, onClose, onLoginSuccess }: LoginBottomSheetProps) => {
   // Animation value for the slide-up effect
   const slideAnim = useRef(new Animated.Value(0)).current;
-
+const navigation = useNavigation<any>();
   // State for mobile number input
-  const [mobileNumber, setMobileNumber] = React.useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  //loader
+  const [loading, setLoading] = useState(false);
 
   // Trigger animation when visibility changes
   useEffect(() => {
@@ -54,6 +59,42 @@ const LoginBottomSheet = ({ isVisible, onClose, onLoginSuccess }: LoginBottomShe
     inputRange: [0, 1],
     outputRange: [600, 0], // Starts 600px below, ends at 0 (original position)
   });
+
+  //generate otp function
+  const callGenerateOtp = async () => {
+  try {
+    setLoading(true);
+
+   const fullPhoneNumber = `+91${mobileNumber}`;
+
+    const response =
+      await authRepository.generateOtp(fullPhoneNumber);
+
+    setLoading(false);
+
+    if (response.status === 1) {
+      onClose();
+      navigation.navigate('OTPScreen', {
+        phoneNumber: fullPhoneNumber,
+      });
+
+    } else {
+      Alert.alert(
+        'Failed',
+        response.error ?? 'Unable to generate OTP',
+      );
+    }
+  } catch (error: any) {
+    setLoading(false);
+
+    Alert.alert(
+      'Error',
+      error?.response?.data?.error ??
+        'Something went wrong',
+    );
+  }
+};
+
 
   // Handle close button press
   const handleClose = () => {
@@ -89,7 +130,10 @@ const LoginBottomSheet = ({ isVisible, onClose, onLoginSuccess }: LoginBottomShe
             {/* Content section */}
             <View style={styles.content}>
               {/* Icon/Illustration placeholder */}
-              <Image style={styles.iconEmoji} source={require('../assets/icons/ic_phone.png')} />
+              <Image
+                style={styles.iconEmoji}
+                source={require('../../assets/icons/ic_phone.png')}
+              />
 
               {/* Title */}
               <AppText style={styles.title}>Enter the mobile number</AppText>
@@ -125,7 +169,7 @@ const LoginBottomSheet = ({ isVisible, onClose, onLoginSuccess }: LoginBottomShe
               <TouchableOpacity
                 style={styles.continueButton}
                 activeOpacity={0.8}
-                onPress={onLoginSuccess}>
+                onPress={callGenerateOtp}>
                 <AppText style={styles.continueButtonText}>Continue</AppText>
               </TouchableOpacity>
             </View>

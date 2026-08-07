@@ -38,7 +38,7 @@ const SearchScreen = () => {
 const FavoritesStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Favorites" component={FavoritesScreen} />
+      <Stack.Screen name="FavoritesScreen" component={FavoritesScreen} />
       <Stack.Screen name="RestaurantDetails" component={RestaurantDetailsScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>

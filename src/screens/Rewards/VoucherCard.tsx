@@ -5,7 +5,7 @@ import {
   View,
 } from 'react-native';
 
-import AppText from '../../component/AppText/AppText';
+import AppText from '../../component/AppText';
 
 import VoucherIcon from '../../assets/icons/ic_voucher.svg';
 
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
 
-    padding: Spacing.lg,
+    padding: Spacing.md,
 
     borderRadius: Radius.xl,
 
@@ -103,15 +103,12 @@ const styles = StyleSheet.create({
   },
 
   iconContainer: {
-    width: 64,
-    height: 64,
+    width: 56,
+    height: 56,
     borderRadius: Radius.round,
-
     backgroundColor: Colors.white,
-
     justifyContent: 'center',
     alignItems: 'center',
-
     marginRight: Spacing.md,
   },
 
@@ -120,14 +117,14 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: Typography.body,
+    fontSize: Typography.small,
     fontFamily: Fonts.interBold,
     color: Colors.neutral900,
     marginBottom: 4,
   },
 
   subtitle: {
-    fontSize: Typography.body,
+    fontSize: Typography.small,
     fontFamily: Fonts.interRegular,
     color: Colors.neutral700,
   },
@@ -139,21 +136,17 @@ const styles = StyleSheet.create({
 
   useButton: {
     marginLeft: Spacing.md,
-
     backgroundColor: Colors.neutral900,
-
     borderRadius: Radius.round,
-
     width: 72,
-    height: 48,
-
+    height: 34,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   useText: {
     color: Colors.white,
-    fontSize: Typography.body,
+    fontSize: Typography.caption,
     fontFamily: Fonts.interBold,
   },
 });

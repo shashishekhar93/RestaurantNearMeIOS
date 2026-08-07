@@ -28,7 +28,10 @@ const SearchScreen = () => {
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+      />
       <Stack.Screen name="RestaurantDetails" component={RestaurantDetailsScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>

@@ -37,7 +37,7 @@ const SearchScreen = () => {
 const ReservationStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Reservations" component={ReservationsScreen} />
+      <Stack.Screen name="ReservationsScreen" component={ReservationsScreen} />
       <Stack.Screen name="BookingDetails" component={BookingDetailsScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>

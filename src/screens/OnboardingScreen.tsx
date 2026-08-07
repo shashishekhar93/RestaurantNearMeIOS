@@ -14,7 +14,7 @@ import PagerView from 'react-native-pager-view';
 
 import {ONBOARDING_DATA} from '../constants/onboarding';
 import {Colors, Fonts, Radius, Spacing, Typography} from '../theme';
-import LoginBottomSheet from './LoginBottomSheet';
+import LoginBottomSheet from './loginFlow/LoginBottomSheet';
 
 type OnboardingScreenProps = {
   onGetStarted: () => void;

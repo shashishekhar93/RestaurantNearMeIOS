@@ -1,13 +1,21 @@
 import {InternalAxiosRequestConfig} from 'axios';
+import {SessionManager} from '../../utils/SessionManager';
 
-export const requestInterceptor = async (
-  config: InternalAxiosRequestConfig,
+export const requestInterceptor =
+async (
+    config: InternalAxiosRequestConfig,
 ) => {
-  /**
-   * Later:
-   * Read access token from storage
-   * Add Authorization header
-   */
 
-  return config;
+    const token =
+        await SessionManager.getToken();
+
+    if (token) {
+
+        config.headers.Authorization =
+          `Bearer ${token}`;
+
+
+    }
+
+    return config;
 };

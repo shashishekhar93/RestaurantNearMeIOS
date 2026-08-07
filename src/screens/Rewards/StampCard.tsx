@@ -5,7 +5,7 @@ import {
   View,
 } from 'react-native';
 
-import AppText from '../../component/AppText/AppText';
+import AppText from '../../component/AppText';
 
 import CheckIcon from '../../assets/icons/ic_check.svg';
 import BonusIcon from '../../assets/icons/ic_bonus.svg';
