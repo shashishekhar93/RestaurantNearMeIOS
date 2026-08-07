@@ -7,14 +7,12 @@ async (
 ) => {
 
     const token =
-        await SessionManager.getToken();
+        await SessionManager.getAccessToken();
 
     if (token) {
 
         config.headers.Authorization =
           `Bearer ${token}`;
-
-
     }
 
     return config;

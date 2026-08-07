@@ -17,21 +17,38 @@ export interface VerifyOtpRequest {
   fullName: string;
 }
 
-// NEW
+export interface SessionData {
+  accessToken: string;
+  tokenType: string;
+  userName: string;
+  mobile: string;
+  role: string;
+  userId: string;
+  restaurantId: string | null;
+  permissions: string[];
+}
+
 export interface VerifyOtpResponse {
   status: number;
-  data: {
-    accessToken: string;
-    tokenType: string;
-    userName: string;
-    mobile: string;
-    role: string;
-    userId: string;
-    restaurantId: string | null;
-    permissions: string[];
-  };
+  data: SessionData;
   error: any;
 }
+
+// NEW
+// export interface VerifyOtpResponse {
+//   status: number;
+//   data: {
+//     accessToken: string;
+//     tokenType: string;
+//     userName: string;
+//     mobile: string;
+//     role: string;
+//     userId: string;
+//     restaurantId: string | null;
+//     permissions: string[];
+//   };
+//   error: any;
+// }
 
 const authService = {
 

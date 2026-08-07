@@ -33,7 +33,7 @@ const SplashScreen = ({navigation}: SplashScreenProps) => {
 });
 
     const token =
-      await SessionManager.getToken();
+      await SessionManager.getAccessToken();
     if (token) {
       navigation.replace('BottomTabs');
     } else {

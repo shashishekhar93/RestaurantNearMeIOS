@@ -130,7 +130,7 @@ const VerifyOtpScreen = ({navigation, route}: Props) => {
       setLoading(false);
 
       if (response.status === 1) {
-        await SessionManager.saveUser(response.data);
+        await SessionManager.saveSession(response.data);
 
             Geolocation.getCurrentPosition(
                 () => {
