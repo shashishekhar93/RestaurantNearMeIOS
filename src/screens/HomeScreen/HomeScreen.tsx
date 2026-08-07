@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 
 import MainLayout from '../../component/MainLayout';
+import AppText from '../../component/AppText/AppText';
 
-import {Colors, Spacing} from '../../theme';
+import {Colors, Fonts, Spacing, Typography} from '../../theme';
 
 import useRestaurants from './useRestaurants';
 
@@ -29,37 +30,14 @@ const HomeScreen = () => {
   } = useRestaurants();
 
   const renderItem = useCallback(
-    ({item, index}: {item: Restaurant; index: number}) => {
-      if (index === 0) {
-        return (
-          <>
-            <RestaurantBanner restaurant={item} />
-
-            <View style={styles.gridContainer}>
-              {restaurants.length > 1 && (
-                <RestaurantCard
-                  restaurant={restaurants[1]}
-                />
-              )}
-            </View>
-          </>
-        );
-      }
-
-      if (index === 1) {
-        return null;
-      }
-
-      return (
-        <RestaurantCard restaurant={item} />
-      );
-    },
-    [restaurants],
+    ({item}: {item: Restaurant}) => (
+      <RestaurantCard restaurant={item} />
+    ),
+    [],
   );
 
   const keyExtractor = useCallback(
-    (item: Restaurant) =>
-      item.restaurantId.toString(),
+    (item: Restaurant) => item.restaurantId.toString(),
     [],
   );
 
@@ -79,13 +57,32 @@ const HomeScreen = () => {
   return (
     <MainLayout>
       <FlatList
-        data={restaurants}
+        data={restaurants.slice(1)}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         numColumns={2}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.list}
         columnWrapperStyle={styles.row}
+        ListHeaderComponent={
+          <>
+            {restaurants.length > 0 && (
+              <RestaurantBanner
+                restaurant={restaurants[0]}
+              />
+            )}
+
+            <View style={styles.sectionHeader}>
+              <AppText style={styles.sectionTitle}>
+                Near You
+              </AppText>
+
+              <AppText style={styles.seeAll}>
+                See All
+              </AppText>
+            </View>
+          </>
+        }
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -99,6 +96,7 @@ const HomeScreen = () => {
             <ActivityIndicator
               size="small"
               color={Colors.orangePrimary}
+              style={{marginVertical: 20}}
             />
           ) : null
         }
@@ -111,8 +109,8 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   list: {
-    paddingBottom: 120,
     paddingHorizontal: Spacing.md,
+    paddingBottom: 120,
   },
 
   loader: {
@@ -123,13 +121,29 @@ const styles = StyleSheet.create({
 
   row: {
     justifyContent: 'space-between',
+    marginBottom: Spacing.md,
   },
 
-  gridContainer: {
-    flex: 1,
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: Spacing.lg,
+    marginTop: Spacing.md,
+  },
+
+  sectionTitle: {
+    fontFamily: Fonts.interBold,
+    fontSize: Typography.h2,
+    color: Colors.black,
+  },
+
+  seeAll: {
+    fontFamily: Fonts.interSemiBold,
+    fontSize: Typography.body,
+    color: Colors.orangePrimary,
   },
 });
-
 // import React from 'react';
 // import {StyleSheet, View} from 'react-native';
 
