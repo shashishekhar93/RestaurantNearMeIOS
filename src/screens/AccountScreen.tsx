@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View, ScrollView} from 'react-native';
 import AppText from '../component/AppText';
 import {Colors, Fonts, Radius, Spacing, Typography} from '../theme';
@@ -43,6 +43,26 @@ type Props = {
 const AccountScreen = ({onOpenWallet, onOpenRewards}: Props) => {
 
   const navigation = useNavigation<any>();
+  const [username, setUsername] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+   useEffect(() => {
+    // Load username and phone number from SessionManager when the component mounts
+    const loadUsername = async () => {
+      const storedUsername = await SessionManager.getUserName();
+      setUsername(storedUsername ?? '');
+    };
+
+    loadUsername();
+    // Load phone number from SessionManager when the component mounts
+    const loadPhoneNumber = async () => {
+      const storedPhoneNumber = await SessionManager.getMobile();
+      setPhoneNumber(storedPhoneNumber ?? '');
+    };
+
+    loadPhoneNumber();
+  }, []);
+
 
   const logout = () => {
     Alert.alert(
@@ -95,8 +115,10 @@ const AccountScreen = ({onOpenWallet, onOpenRewards}: Props) => {
           <View style={styles.avatarCircle}>
             <AppText style={styles.avatarText}>SS</AppText>
           </View>
-          <AppText style={styles.profileName}>Smita Singhal</AppText>
-          <AppText style={styles.profilePhone}>+91 8787878787</AppText>
+          <AppText style={styles.profileName}>
+            {username}
+          </AppText>
+          <AppText style={styles.profilePhone}>{phoneNumber}</AppText>
           <TouchableOpacity style={styles.updateButton} activeOpacity={0.8}>
             <AppText style={styles.updateButtonText}>Update</AppText>
           </TouchableOpacity>
