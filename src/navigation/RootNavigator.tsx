@@ -34,6 +34,12 @@ const SplashScreen = ({navigation}: SplashScreenProps) => {
 
     const token =
       await SessionManager.getAccessToken();
+
+    const userId = await SessionManager.getUserId();
+      console.log('========== SESSION DEBUG ==========');
+      console.log('USER ID:', userId);
+      console.log('AUTH TOKEN:', token);
+      console.log('===================================');
     if (token) {
       navigation.replace('BottomTabs');
     } else {
