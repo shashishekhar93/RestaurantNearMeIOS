@@ -17,58 +17,89 @@ const PAGE_SIZE = 10;
 const useStories = (
   filters?: StoryListRequest,
 ) => {
-  const [stories, setStories] = useState<Story[]>([]);
+  const [stories, setStories] =
+    useState<Story[]>([]);
 
-  const [loading, setLoading] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] =
+    useState(false);
 
-  const [error, setError] = useState<string | null>(
-    null,
-  );
+  const [refreshing, setRefreshing] =
+    useState(false);
 
-  /**
-   * Prevents multiple simultaneous API calls.
-   *
-   * This is especially important because FlatList's
-   * onEndReached can fire more than once.
-   */
-  const requestInProgress = useRef(false);
+  const [page, setPage] =
+    useState(0);
 
-  /**
-   * Keeps the latest filters without making the
-   * load function depend on the object reference.
-   */
-  const filtersRef = useRef<StoryListRequest>(
-    filters ?? {},
-  );
+  const [hasMore, setHasMore] =
+    useState(true);
+
+  const [error, setError] =
+    useState<string | null>(null);
+
+  // =====================================================
+  // PREVENT MULTIPLE SIMULTANEOUS REQUESTS
+  // =====================================================
+
+  const requestInProgress =
+    useRef(false);
+
+  // =====================================================
+  // KEEP LATEST FILTERS
+  // =====================================================
+
+  const filtersRef =
+    useRef<StoryListRequest>(
+      filters ?? {},
+    );
 
   useEffect(() => {
-    filtersRef.current = filters ?? {};
+    filtersRef.current =
+      filters ?? {};
   }, [filters]);
+
+  // =====================================================
+  // LOAD STORIES
+  // =====================================================
 
   const loadStories = useCallback(
     async (
       pageNumber: number,
       isRefresh: boolean = false,
     ) => {
-      if (requestInProgress.current) {
+
+      // -----------------------------------------------
+      // PREVENT DUPLICATE REQUEST
+      // -----------------------------------------------
+
+      if (
+        requestInProgress.current
+      ) {
         return;
       }
 
       requestInProgress.current = true;
 
       try {
+
+        // ---------------------------------------------
+        // LOADING STATE
+        // ---------------------------------------------
+
         if (isRefresh) {
           setRefreshing(true);
-        } else if (pageNumber === 0) {
+        } else if (
+          pageNumber === 0
+        ) {
           setLoading(true);
         } else {
           setLoadingMore(true);
         }
+
+        // ---------------------------------------------
+        // API
+        // ---------------------------------------------
 
         const response =
           await StoryRepository.listStories(
@@ -77,7 +108,9 @@ const useStories = (
             filtersRef.current,
           );
 
-        if (response.status !== 1) {
+        if (
+          response.status !== 1
+        ) {
           throw new Error(
             response.error ??
               'Unable to load stories',
@@ -85,7 +118,12 @@ const useStories = (
         }
 
         const newStories =
-          response.data.results ?? [];
+          response.data.results ??
+          [];
+
+        // ---------------------------------------------
+        // UPDATE LIST
+        // ---------------------------------------------
 
         if (
           isRefresh ||
@@ -93,92 +131,342 @@ const useStories = (
         ) {
           setStories(newStories);
         } else {
-          setStories(previousStories => [
-            ...previousStories,
-            ...newStories,
-          ]);
+          setStories(
+            previousStories => [
+              ...previousStories,
+              ...newStories,
+            ],
+          );
         }
+
+        // ---------------------------------------------
+        // PAGE
+        // ---------------------------------------------
 
         setPage(pageNumber);
 
-        /**
-         * API page.total represents the total number
-         * of pages, matching the restaurant API.
-         */
+        // ---------------------------------------------
+        // HAS MORE
+        // ---------------------------------------------
+
         setHasMore(
           pageNumber + 1 <
             response.data.page.total,
         );
 
         setError(null);
+
       } catch (e: any) {
+
         setError(
           e?.message ??
             'Unable to load stories',
         );
+
+        console.error(
+          '[Stories] Load failed:',
+          e,
+        );
+
       } finally {
+
         setLoading(false);
         setLoadingMore(false);
         setRefreshing(false);
 
-        requestInProgress.current = false;
+        requestInProgress.current =
+          false;
       }
     },
     [],
   );
 
-  /**
-   * Initial API call.
-   *
-   * IMPORTANT:
-   * loadStories has an empty dependency array,
-   * therefore this effect runs only once when
-   * the hook is mounted.
-   */
+  // =====================================================
+  // INITIAL LOAD
+  // =====================================================
+
   useEffect(() => {
     loadStories(0);
   }, [loadStories]);
 
-  const refresh = useCallback(() => {
-    if (requestInProgress.current) {
-      return;
-    }
+  // =====================================================
+  // REFRESH
+  // =====================================================
 
-    setHasMore(true);
-    loadStories(0, true);
-  }, [loadStories]);
+  const refresh =
+    useCallback(() => {
 
-  const loadMore = useCallback(() => {
-    if (
-      requestInProgress.current ||
-      loading ||
-      loadingMore ||
-      refreshing ||
-      !hasMore
-    ) {
-      return;
-    }
+      if (
+        requestInProgress.current
+      ) {
+        return;
+      }
 
-    loadStories(page + 1);
-  }, [
-    loadStories,
-    page,
-    loading,
-    loadingMore,
-    refreshing,
-    hasMore,
-  ]);
+      setHasMore(true);
+
+      loadStories(
+        0,
+        true,
+      );
+
+    }, [loadStories]);
+
+  // =====================================================
+  // REFRESH STORIES
+  //
+  // Used after creating a new story.
+  //
+  // IMPORTANT:
+  // This is simply an alias around the existing
+  // refresh() logic. We are NOT creating another
+  // useEffect or another API listener.
+  // =====================================================
+
+  const refreshStories =
+    useCallback(() => {
+
+      refresh();
+
+    }, [refresh]);
+
+  // =====================================================
+  // LOAD MORE
+  // =====================================================
+
+  const loadMore =
+    useCallback(() => {
+
+      if (
+        requestInProgress.current ||
+        loading ||
+        loadingMore ||
+        refreshing ||
+        !hasMore
+      ) {
+        return;
+      }
+
+      loadStories(
+        page + 1,
+      );
+
+    }, [
+      loadStories,
+      page,
+      loading,
+      loadingMore,
+      refreshing,
+      hasMore,
+    ]);
+
+  // =====================================================
+  // RETURN
+  // =====================================================
 
   return {
     stories,
+
     loading,
+
     loadingMore,
+
     refreshing,
+
     error,
+
     refresh,
+
+    refreshStories,
+
     loadMore,
+
     hasMore,
   };
 };
 
 export default useStories;
+
+// import {
+//   useCallback,
+//   useEffect,
+//   useRef,
+//   useState,
+// } from 'react';
+
+// import StoryRepository from '../../api/repository/storyRepository';
+
+// import {
+//   Story,
+//   StoryListRequest,
+// } from '../../api/services/story/Story';
+
+// const PAGE_SIZE = 10;
+
+// const useStories = (
+//   filters?: StoryListRequest,
+// ) => {
+//   const [stories, setStories] = useState<Story[]>([]);
+
+//   const [loading, setLoading] = useState(false);
+//   const [loadingMore, setLoadingMore] = useState(false);
+//   const [refreshing, setRefreshing] = useState(false);
+
+//   const [page, setPage] = useState(0);
+//   const [hasMore, setHasMore] = useState(true);
+
+//   const [error, setError] = useState<string | null>(
+//     null,
+//   );
+
+//   /**
+//    * Prevents multiple simultaneous API calls.
+//    *
+//    * This is especially important because FlatList's
+//    * onEndReached can fire more than once.
+//    */
+//   const requestInProgress = useRef(false);
+
+//   /**
+//    * Keeps the latest filters without making the
+//    * load function depend on the object reference.
+//    */
+//   const filtersRef = useRef<StoryListRequest>(
+//     filters ?? {},
+//   );
+
+//   useEffect(() => {
+//     filtersRef.current = filters ?? {};
+//   }, [filters]);
+
+//   const loadStories = useCallback(
+//     async (
+//       pageNumber: number,
+//       isRefresh: boolean = false,
+//     ) => {
+//       if (requestInProgress.current) {
+//         return;
+//       }
+
+//       requestInProgress.current = true;
+
+//       try {
+//         if (isRefresh) {
+//           setRefreshing(true);
+//         } else if (pageNumber === 0) {
+//           setLoading(true);
+//         } else {
+//           setLoadingMore(true);
+//         }
+
+//         const response =
+//           await StoryRepository.listStories(
+//             pageNumber,
+//             PAGE_SIZE,
+//             filtersRef.current,
+//           );
+
+//         if (response.status !== 1) {
+//           throw new Error(
+//             response.error ??
+//               'Unable to load stories',
+//           );
+//         }
+
+//         const newStories =
+//           response.data.results ?? [];
+
+//         if (
+//           isRefresh ||
+//           pageNumber === 0
+//         ) {
+//           setStories(newStories);
+//         } else {
+//           setStories(previousStories => [
+//             ...previousStories,
+//             ...newStories,
+//           ]);
+//         }
+
+//         setPage(pageNumber);
+
+//         /**
+//          * API page.total represents the total number
+//          * of pages, matching the restaurant API.
+//          */
+//         setHasMore(
+//           pageNumber + 1 <
+//             response.data.page.total,
+//         );
+
+//         setError(null);
+//       } catch (e: any) {
+//         setError(
+//           e?.message ??
+//             'Unable to load stories',
+//         );
+//       } finally {
+//         setLoading(false);
+//         setLoadingMore(false);
+//         setRefreshing(false);
+
+//         requestInProgress.current = false;
+//       }
+//     },
+//     [],
+//   );
+
+//   /**
+//    * Initial API call.
+//    *
+//    * IMPORTANT:
+//    * loadStories has an empty dependency array,
+//    * therefore this effect runs only once when
+//    * the hook is mounted.
+//    */
+//   useEffect(() => {
+//     loadStories(0);
+//   }, [loadStories]);
+
+//   const refresh = useCallback(() => {
+//     if (requestInProgress.current) {
+//       return;
+//     }
+
+//     setHasMore(true);
+//     loadStories(0, true);
+//   }, [loadStories]);
+
+//   const loadMore = useCallback(() => {
+//     if (
+//       requestInProgress.current ||
+//       loading ||
+//       loadingMore ||
+//       refreshing ||
+//       !hasMore
+//     ) {
+//       return;
+//     }
+
+//     loadStories(page + 1);
+//   }, [
+//     loadStories,
+//     page,
+//     loading,
+//     loadingMore,
+//     refreshing,
+//     hasMore,
+//   ]);
+
+//   return {
+//     stories,
+//     loading,
+//     loadingMore,
+//     refreshing,
+//     error,
+//     refresh,
+//     loadMore,
+//     hasMore,
+//   };
+// };
+
+// export default useStories;

@@ -144,88 +144,80 @@ const StoryViewer = ({
   // SWIPE DOWN
   // =====================================================
 
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (
-        _,
-        gestureState,
-      ) => {
-        const vertical =
-          Math.abs(
-            gestureState.dy,
-          ) >
-          Math.abs(
-            gestureState.dx,
-          );
+const panResponder = useRef(
+  PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
 
-        return (
-          vertical &&
-          gestureState.dy > 10
+    onMoveShouldSetPanResponder: (
+      _,
+      gestureState,
+    ) => {
+      const {dx, dy} = gestureState;
+
+      return (
+        Math.abs(dy) > 5 &&
+        Math.abs(dy) > Math.abs(dx)
+      );
+    },
+
+    onPanResponderMove: (
+      _,
+      gestureState,
+    ) => {
+      if (gestureState.dy > 0) {
+        translateY.setValue(
+          gestureState.dy,
         );
-      },
+      }
+    },
 
-      onPanResponderMove: (
-        _,
-        gestureState,
-      ) => {
-        if (
-          gestureState.dy > 0
-        ) {
-          translateY.setValue(
-            gestureState.dy,
-          );
-        }
-      },
-
-      onPanResponderRelease: (
-        _,
-        gestureState,
-      ) => {
-        if (
-          gestureState.dy >
-          SWIPE_THRESHOLD
-        ) {
-          Animated.timing(
-            translateY,
-            {
-              toValue:
-                SCREEN_HEIGHT,
-              duration: 200,
-              useNativeDriver: true,
-            },
-          ).start(() => {
-            translateY.setValue(0);
-            closeViewer();
-          });
-
-          return;
-        }
-
-        Animated.spring(
+    onPanResponderRelease: (
+      _,
+      gestureState,
+    ) => {
+      if (
+        gestureState.dy >
+        SWIPE_THRESHOLD
+      ) {
+        Animated.timing(
           translateY,
           {
-            toValue: 0,
-            tension: 80,
-            friction: 10,
+            toValue: SCREEN_HEIGHT,
+            duration: 200,
             useNativeDriver: true,
           },
-        ).start();
-      },
+        ).start(() => {
+          translateY.setValue(0);
+          closeViewer();
+        });
 
-      onPanResponderTerminate: () => {
-        Animated.spring(
-          translateY,
-          {
-            toValue: 0,
-            tension: 80,
-            friction: 10,
-            useNativeDriver: true,
-          },
-        ).start();
-      },
-    }),
-  ).current;
+        return;
+      }
 
+      Animated.spring(
+        translateY,
+        {
+          toValue: 0,
+          tension: 80,
+          friction: 10,
+          useNativeDriver: true,
+        },
+      ).start();
+    },
+
+    onPanResponderTerminate: () => {
+      Animated.spring(
+        translateY,
+        {
+          toValue: 0,
+          tension: 80,
+          friction: 10,
+          useNativeDriver: true,
+        },
+      ).start();
+    },
+  }),
+).current;
   // =====================================================
   // NOTHING TO SHOW
   // =====================================================
@@ -311,7 +303,7 @@ const StoryViewer = ({
 
           <View
             pointerEvents="none"
-            style={styles.topOverlay}
+            style={styles.topSafeArea}
           />
 
           {/* =================================================
@@ -454,11 +446,10 @@ const styles = StyleSheet.create({
   // =====================================================
 
   storyArea: {
-    flex: 1,
-    backgroundColor: '#000000',
-    position: 'relative',
-    overflow: 'hidden',
-  },
+  flex: 1,
+  backgroundColor: '#000000',
+  position: 'relative',
+},
 
   // =====================================================
   // IMAGE

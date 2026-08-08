@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react';
+
 import {
   ActivityIndicator,
   FlatList,
@@ -49,6 +50,7 @@ const HomeScreen = () => {
   const {
     stories,
     loading: storiesLoading,
+    refresh: refreshStories,
   } = useStories();
 
   // =========================================
@@ -118,9 +120,13 @@ const HomeScreen = () => {
 
         showsVerticalScrollIndicator={false}
 
-        contentContainerStyle={styles.list}
+        contentContainerStyle={
+          styles.list
+        }
 
-        columnWrapperStyle={styles.row}
+        columnWrapperStyle={
+          styles.row
+        }
 
         /*
          * =====================================
@@ -130,6 +136,7 @@ const HomeScreen = () => {
          * Everything before the restaurant
          * grid lives here.
          */
+
         ListHeaderComponent={
           <View>
 
@@ -147,6 +154,15 @@ const HomeScreen = () => {
               stories.length > 0 && (
                 <RestaurantStories
                   stories={stories}
+
+                  /*
+                   * After a new story is successfully
+                   * created, refresh the existing
+                   * story list.
+                   */
+                  onStoryCreated={
+                    refreshStories
+                  }
                 />
               )}
 
@@ -156,7 +172,9 @@ const HomeScreen = () => {
 
             {restaurants.length > 0 && (
               <RestaurantBanner
-                restaurant={restaurants[0]}
+                restaurant={
+                  restaurants[0]
+                }
               />
             )}
 
@@ -165,15 +183,21 @@ const HomeScreen = () => {
             ================================= */}
 
             <View
-              style={styles.sectionHeader}>
+              style={
+                styles.sectionHeader
+              }>
 
               <AppText
-                style={styles.sectionTitle}>
+                style={
+                  styles.sectionTitle
+                }>
                 Near You
               </AppText>
 
               <AppText
-                style={styles.seeAll}>
+                style={
+                  styles.seeAll
+                }>
                 See All
               </AppText>
 
@@ -204,7 +228,9 @@ const HomeScreen = () => {
          * =====================================
          */
 
-        onEndReached={loadMore}
+        onEndReached={
+          loadMore
+        }
 
         onEndReachedThreshold={0.5}
 
@@ -221,7 +247,9 @@ const HomeScreen = () => {
               color={
                 Colors.orangePrimary
               }
-              style={styles.footerLoader}
+              style={
+                styles.footerLoader
+              }
             />
           ) : null
         }
@@ -240,7 +268,8 @@ const styles = StyleSheet.create({
   // =========================================
 
   list: {
-    paddingHorizontal: Spacing.md,
+    paddingHorizontal:
+      Spacing.md,
 
     paddingBottom: 120,
   },
@@ -252,8 +281,11 @@ const styles = StyleSheet.create({
   loader: {
     flex: 1,
 
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent:
+      'center',
+
+    alignItems:
+      'center',
   },
 
   // =========================================
@@ -261,9 +293,11 @@ const styles = StyleSheet.create({
   // =========================================
 
   row: {
-    justifyContent: 'space-between',
+    justifyContent:
+      'space-between',
 
-    marginBottom: Spacing.md,
+    marginBottom:
+      Spacing.md,
   },
 
   // =========================================
@@ -271,32 +305,42 @@ const styles = StyleSheet.create({
   // =========================================
 
   sectionHeader: {
-    flexDirection: 'row',
+    flexDirection:
+      'row',
 
     justifyContent:
       'space-between',
 
-    alignItems: 'center',
+    alignItems:
+      'center',
 
-    marginTop: Spacing.md,
+    marginTop:
+      Spacing.md,
 
-    marginBottom: Spacing.lg,
+    marginBottom:
+      Spacing.lg,
   },
 
   sectionTitle: {
-    fontFamily: Fonts.interBold,
+    fontFamily:
+      Fonts.interBold,
 
-    fontSize: Typography.h2,
+    fontSize:
+      Typography.h2,
 
-    color: Colors.black,
+    color:
+      Colors.black,
   },
 
   seeAll: {
-    fontFamily: Fonts.interSemiBold,
+    fontFamily:
+      Fonts.interSemiBold,
 
-    fontSize: Typography.body,
+    fontSize:
+      Typography.body,
 
-    color: Colors.orangePrimary,
+    color:
+      Colors.orangePrimary,
   },
 
   // =========================================
@@ -306,6 +350,7 @@ const styles = StyleSheet.create({
   footerLoader: {
     marginVertical: 20,
   },
+
 });
 
 // import React, {useCallback} from 'react';
@@ -330,6 +375,7 @@ const styles = StyleSheet.create({
 // import useRestaurants from './useRestaurants';
 // import useStories from './useStories';
 
+// import HomeHeader from './HomeHeader';
 // import RestaurantBanner from './RestaurantBanner';
 // import RestaurantCard from './RestaurantCard';
 // import RestaurantStories from './RestaurantStories';
@@ -337,9 +383,11 @@ const styles = StyleSheet.create({
 // import {Restaurant} from '../../api/services/restaurantList/Restaurant';
 
 // const HomeScreen = () => {
-//   // -----------------------------------------
+
+//   // =========================================
 //   // RESTAURANTS
-//   // -----------------------------------------
+//   // =========================================
+
 //   const {
 //     restaurants,
 //     loading,
@@ -349,17 +397,19 @@ const styles = StyleSheet.create({
 //     loadMore,
 //   } = useRestaurants();
 
-//   // -----------------------------------------
+//   // =========================================
 //   // STORIES
-//   // -----------------------------------------
+//   // =========================================
+
 //   const {
 //     stories,
 //     loading: storiesLoading,
 //   } = useStories();
 
-//   // -----------------------------------------
+//   // =========================================
 //   // RESTAURANT CARD
-//   // -----------------------------------------
+//   // =========================================
+
 //   const renderItem = useCallback(
 //     ({item}: {item: Restaurant}) => {
 //       return (
@@ -371,18 +421,20 @@ const styles = StyleSheet.create({
 //     [],
 //   );
 
-//   // -----------------------------------------
-//   // KEY
-//   // -----------------------------------------
+//   // =========================================
+//   // KEY EXTRACTOR
+//   // =========================================
+
 //   const keyExtractor = useCallback(
 //     (item: Restaurant) =>
 //       item.restaurantId.toString(),
 //     [],
 //   );
 
-//   // -----------------------------------------
-//   // INITIAL RESTAURANT LOADING
-//   // -----------------------------------------
+//   // =========================================
+//   // INITIAL LOADING
+//   // =========================================
+
 //   if (loading) {
 //     return (
 //       <MainLayout>
@@ -396,39 +448,56 @@ const styles = StyleSheet.create({
 //     );
 //   }
 
-//   // -----------------------------------------
+//   // =========================================
 //   // HOME
-//   // -----------------------------------------
+//   // =========================================
+
 //   return (
 //     <MainLayout>
+
 //       <FlatList
 //         /*
-//          * First restaurant is used as the featured banner.
-//          * Remaining restaurants are displayed in the grid.
+//          * First restaurant is used as
+//          * the featured banner.
+//          *
+//          * Remaining restaurants are
+//          * displayed in the grid.
 //          */
 //         data={restaurants.slice(1)}
+
 //         renderItem={renderItem}
+
 //         keyExtractor={keyExtractor}
+
 //         numColumns={2}
+
 //         showsVerticalScrollIndicator={false}
+
 //         contentContainerStyle={styles.list}
+
 //         columnWrapperStyle={styles.row}
-        
+
 //         /*
-//          * -------------------------------------
+//          * =====================================
 //          * HEADER
-//          * -------------------------------------
+//          * =====================================
+//          *
+//          * Everything before the restaurant
+//          * grid lives here.
 //          */
 //         ListHeaderComponent={
-//           <>
-//             {/* FEATURED RESTAURANT BANNER */}
-//             {restaurants.length > 0 && (
-//               <RestaurantBanner
-//                 restaurant={restaurants[0]}
-//               />
-//             )}
+//           <View>
 
-//             {/* STORIES */}
+//             {/* =================================
+//                 TITLE + SEARCH + FILTERS
+//             ================================= */}
+
+//             <HomeHeader />
+
+//             {/* =================================
+//                 STORIES
+//             ================================= */}
+
 //             {!storiesLoading &&
 //               stories.length > 0 && (
 //                 <RestaurantStories
@@ -436,54 +505,83 @@ const styles = StyleSheet.create({
 //                 />
 //               )}
 
-//             {/* NEAR YOU */}
-//             <View style={styles.sectionHeader}>
-//               <AppText style={styles.sectionTitle}>
+//             {/* =================================
+//                 FEATURED RESTAURANT
+//             ================================= */}
+
+//             {restaurants.length > 0 && (
+//               <RestaurantBanner
+//                 restaurant={restaurants[0]}
+//               />
+//             )}
+
+//             {/* =================================
+//                 NEAR YOU
+//             ================================= */}
+
+//             <View
+//               style={styles.sectionHeader}>
+
+//               <AppText
+//                 style={styles.sectionTitle}>
 //                 Near You
 //               </AppText>
 
-//               <AppText style={styles.seeAll}>
+//               <AppText
+//                 style={styles.seeAll}>
 //                 See All
 //               </AppText>
+
 //             </View>
-//           </>
+
+//           </View>
 //         }
 
 //         /*
-//          * -------------------------------------
+//          * =====================================
 //          * PULL TO REFRESH
-//          * -------------------------------------
+//          * =====================================
 //          */
+
 //         refreshControl={
 //           <RefreshControl
 //             refreshing={refreshing}
 //             onRefresh={refresh}
+//             tintColor={
+//               Colors.orangePrimary
+//             }
 //           />
 //         }
 
 //         /*
-//          * -------------------------------------
+//          * =====================================
 //          * PAGINATION
-//          * -------------------------------------
+//          * =====================================
 //          */
+
 //         onEndReached={loadMore}
+
 //         onEndReachedThreshold={0.5}
 
 //         /*
-//          * -------------------------------------
+//          * =====================================
 //          * PAGINATION LOADER
-//          * -------------------------------------
+//          * =====================================
 //          */
+
 //         ListFooterComponent={
 //           loadingMore ? (
 //             <ActivityIndicator
 //               size="small"
-//               color={Colors.orangePrimary}
+//               color={
+//                 Colors.orangePrimary
+//               }
 //               style={styles.footerLoader}
 //             />
 //           ) : null
 //         }
 //       />
+
 //     </MainLayout>
 //   );
 // };
@@ -491,58 +589,75 @@ const styles = StyleSheet.create({
 // export default HomeScreen;
 
 // const styles = StyleSheet.create({
-//   /*
-//    * Main FlatList content
-//    */
+
+//   // =========================================
+//   // LIST
+//   // =========================================
+
 //   list: {
 //     paddingHorizontal: Spacing.md,
+
 //     paddingBottom: 120,
 //   },
 
-//   /*
-//    * Initial loading screen
-//    */
+//   // =========================================
+//   // INITIAL LOADER
+//   // =========================================
+
 //   loader: {
 //     flex: 1,
+
 //     justifyContent: 'center',
 //     alignItems: 'center',
 //   },
 
-//   /*
-//    * Two-column restaurant grid
-//    */
+//   // =========================================
+//   // RESTAURANT GRID
+//   // =========================================
+
 //   row: {
 //     justifyContent: 'space-between',
+
 //     marginBottom: Spacing.md,
 //   },
 
-//   /*
-//    * "Near You" section header
-//    */
+//   // =========================================
+//   // NEAR YOU
+//   // =========================================
+
 //   sectionHeader: {
 //     flexDirection: 'row',
-//     justifyContent: 'space-between',
+
+//     justifyContent:
+//       'space-between',
+
 //     alignItems: 'center',
 
-//     marginBottom: Spacing.lg,
 //     marginTop: Spacing.md,
+
+//     marginBottom: Spacing.lg,
 //   },
 
 //   sectionTitle: {
 //     fontFamily: Fonts.interBold,
+
 //     fontSize: Typography.h2,
+
 //     color: Colors.black,
 //   },
 
 //   seeAll: {
 //     fontFamily: Fonts.interSemiBold,
+
 //     fontSize: Typography.body,
+
 //     color: Colors.orangePrimary,
 //   },
 
-//   /*
-//    * Pagination loader
-//    */
+//   // =========================================
+//   // PAGINATION
+//   // =========================================
+
 //   footerLoader: {
 //     marginVertical: 20,
 //   },
