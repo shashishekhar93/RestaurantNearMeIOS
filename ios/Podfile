@@ -17,18 +17,55 @@ end
 target 'RestaurantsNearMeIOS' do
   config = use_native_modules!
 
+  # use_react_native!(
+  #   :path => config[:reactNativePath],
+  #   # An absolute path to your application root.
+  #   :app_path => "#{Pod::Config.instance.installation_root}/.."
+  # )
+
   use_react_native!(
-    :path => config[:reactNativePath],
-    # An absolute path to your application root.
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
-  )
+  :path => config[:reactNativePath],
+  :app_path => "#{Pod::Config.instance.installation_root}/.."
+)
+
+pod 'react-native-maps',
+  :path => '../node_modules/react-native-maps',
+  :subspecs => ['Maps', 'Google']
 
   post_install do |installer|
-    react_native_post_install(
-      installer,
-      config[:reactNativePath],
-      :mac_catalyst_enabled => false,
-      # :ccache_enabled => true
-    )
+
+  react_native_post_install(
+    installer,
+    config[:reactNativePath],
+    :mac_catalyst_enabled => false,
+  )
+
+  # ==========================================================
+  # XCODE 26 / REACT NATIVE NATIVE MODULE COMPATIBILITY
+  # ==========================================================
+  #
+  # Some React Native native modules, such as react-native-svg,
+  # include React Native headers that Xcode can treat as
+  # non-modular when compiling framework/module targets.
+  #
+  # Allowing these includes prevents the
+  # "non-modular-include-in-framework-module" compilation error.
+  #
+  # This is applied to Pods only and does not modify our
+  # JavaScript/TypeScript code.
+  # ==========================================================
+
+  installer.pods_project.targets.each do |target|
+
+    target.build_configurations.each do |config|
+
+      config.build_settings[
+        'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'
+      ] = 'YES'
+
+    end
+
   end
+
+end
 end
