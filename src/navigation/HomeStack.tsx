@@ -1,10 +1,32 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import type {HomeStackParamList} from './types';
+
+import {
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
+
+import type {
+  HomeStackParamList,
+} from './types';
+
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import MenuScreen from '../screens/MenuScreen/MenuScreen';
+
 import PlaceholderScreen from './PlaceholderScreen';
 
-const Stack = createNativeStackNavigator<HomeStackParamList>();
+
+// ============================================================
+// STACK
+// ============================================================
+
+const Stack =
+  createNativeStackNavigator<
+    HomeStackParamList
+  >();
+
+
+// ============================================================
+// RESTAURANT DETAILS
+// ============================================================
 
 const RestaurantDetailsScreen = () => {
   return (
@@ -15,6 +37,11 @@ const RestaurantDetailsScreen = () => {
   );
 };
 
+
+// ============================================================
+// SEARCH
+// ============================================================
+
 const SearchScreen = () => {
   return (
     <PlaceholderScreen
@@ -24,18 +51,69 @@ const SearchScreen = () => {
   );
 };
 
-// HomeStack keeps routes related to the home experience isolated from the other tabs.
+
+// ============================================================
+// HOME STACK
+// ============================================================
+
 const HomeStackNavigator = () => {
+
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+
+      {/* ==================================================
+          HOME
+      ================================================== */}
+
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
       />
-      <Stack.Screen name="RestaurantDetails" component={RestaurantDetailsScreen} />
-      <Stack.Screen name="Search" component={SearchScreen} />
+
+
+      {/* ==================================================
+          RESTAURANT DETAILS
+      ================================================== */}
+
+      <Stack.Screen
+        name="RestaurantDetails"
+        component={
+          RestaurantDetailsScreen
+        }
+      />
+
+
+      {/* ==================================================
+          SEARCH
+      ================================================== */}
+
+      <Stack.Screen
+        name="Search"
+        component={
+          SearchScreen
+        }
+      />
+
+
+      {/* ==================================================
+          MENU
+      ================================================== */}
+
+      <Stack.Screen
+        name="MenuScreen"
+        component={MenuScreen }
+      />
+
     </Stack.Navigator>
   );
 };
+
+
+// ============================================================
+// EXPORT
+// ============================================================
 
 export default HomeStackNavigator;

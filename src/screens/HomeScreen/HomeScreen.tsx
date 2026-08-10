@@ -28,11 +28,46 @@ import RestaurantStories from './RestaurantStories';
 
 import {Restaurant} from '../../api/services/restaurantList/Restaurant';
 
+import {useNavigation} from '@react-navigation/native';
+
+import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+import type {HomeStackParamList} from '../../navigation/types';
+
+
+// =====================================================
+// NAVIGATION TYPE
+// =====================================================
+
+type HomeNavigationProp =
+  NativeStackNavigationProp<
+    HomeStackParamList
+  >;
+
+
+// =====================================================
+// HOME SCREEN
+// =====================================================
+
 const HomeScreen = () => {
 
-  // =========================================
+  // ===================================================
+  // NAVIGATION
+  // ===================================================
+  //
+  // IMPORTANT:
+  // Hooks must always be called before any
+  // conditional return.
+  //
+  // ===================================================
+
+  const navigation =
+    useNavigation<HomeNavigationProp>();
+
+
+  // ===================================================
   // RESTAURANTS
-  // =========================================
+  // ===================================================
 
   const {
     restaurants,
@@ -43,34 +78,73 @@ const HomeScreen = () => {
     loadMore,
   } = useRestaurants();
 
-  // =========================================
+
+  // ===================================================
   // STORIES
-  // =========================================
+  // ===================================================
 
   const {
     stories,
-    loading: storiesLoading,
     refresh: refreshStories,
   } = useStories();
 
-  // =========================================
+
+  // ===================================================
+  // OPEN MENU SCREEN
+  // ===================================================
+  //
+  // We pass the COMPLETE restaurant object.
+  //
+  // MenuScreen will receive it through:
+  //
+  // route.params.restaurant
+  //
+  // ===================================================
+
+  const openMenuScreen = useCallback(
+    (restaurant: Restaurant) => {
+
+      navigation.navigate(
+        'MenuScreen',
+        {
+          restaurant,
+        },
+      );
+
+    },
+    [navigation],
+  );
+
+
+  // ===================================================
   // RESTAURANT CARD
-  // =========================================
+  // ===================================================
+  //
+  // This is used for every restaurant
+  // displayed in the "Near You" grid.
+  //
+  // ===================================================
 
   const renderItem = useCallback(
     ({item}: {item: Restaurant}) => {
+
       return (
         <RestaurantCard
           restaurant={item}
+          onPress={() =>
+            openMenuScreen(item)
+          }
         />
       );
+
     },
-    [],
+    [openMenuScreen],
   );
 
-  // =========================================
+
+  // ===================================================
   // KEY EXTRACTOR
-  // =========================================
+  // ===================================================
 
   const keyExtractor = useCallback(
     (item: Restaurant) =>
@@ -78,47 +152,97 @@ const HomeScreen = () => {
     [],
   );
 
-  // =========================================
-  // INITIAL LOADING
-  // =========================================
+
+  // ===================================================
+  // INITIAL RESTAURANT LOADING
+  // ===================================================
 
   if (loading) {
+
     return (
       <MainLayout>
+
         <View style={styles.loader}>
+
           <ActivityIndicator
             size="large"
-            color={Colors.orangePrimary}
+            color={
+              Colors.orangePrimary
+            }
           />
+
         </View>
+
       </MainLayout>
     );
   }
 
-  // =========================================
+
+  // ===================================================
   // HOME
-  // =========================================
+  // ===================================================
 
   return (
     <MainLayout>
 
       <FlatList
+
         /*
-         * First restaurant is used as
+         * =================================================
+         * RESTAURANT DATA
+         * =================================================
+         *
+         * The first restaurant is displayed as
          * the featured banner.
          *
-         * Remaining restaurants are
-         * displayed in the grid.
+         * Therefore we remove it from the grid.
          */
-        data={restaurants.slice(1)}
 
-        renderItem={renderItem}
+        data={
+          restaurants.slice(1)
+        }
 
-        keyExtractor={keyExtractor}
+
+        /*
+         * =================================================
+         * RESTAURANT CARD
+         * =================================================
+         */
+
+        renderItem={
+          renderItem
+        }
+
+
+        /*
+         * =================================================
+         * KEY
+         * =================================================
+         */
+
+        keyExtractor={
+          keyExtractor
+        }
+
+
+        /*
+         * =================================================
+         * TWO COLUMN GRID
+         * =================================================
+         */
 
         numColumns={2}
 
-        showsVerticalScrollIndicator={false}
+
+        /*
+         * =================================================
+         * UI
+         * =================================================
+         */
+
+        showsVerticalScrollIndicator={
+          false
+        }
 
         contentContainerStyle={
           styles.list
@@ -128,59 +252,81 @@ const HomeScreen = () => {
           styles.row
         }
 
+
         /*
-         * =====================================
+         * =================================================
          * HEADER
-         * =====================================
+         * =================================================
          *
-         * Everything before the restaurant
-         * grid lives here.
+         * Everything above the restaurant
+         * grid is rendered here.
          */
 
         ListHeaderComponent={
+
           <View>
 
-            {/* =================================
-                TITLE + SEARCH + FILTERS
-            ================================= */}
+            {/* =========================================
+                HOME HEADER
+            ========================================= */}
 
             <HomeHeader />
 
-            {/* =================================
+
+            {/* =========================================
                 STORIES
-            ================================= */}
+            =========================================
+            
+                Always render RestaurantStories.
 
-            {!storiesLoading &&
-              stories.length > 0 && (
-                <RestaurantStories
-                  stories={stories}
+                Even when the API returns:
 
-                  /*
-                   * After a new story is successfully
-                   * created, refresh the existing
-                   * story list.
-                   */
-                  onStoryCreated={
-                    refreshStories
-                  }
-                />
-              )}
+                results: []
 
-            {/* =================================
+                "Your Story" must still be visible.
+            ========================================= */}
+
+            <RestaurantStories
+              stories={
+                stories
+              }
+
+              onStoryCreated={
+                refreshStories
+              }
+            />
+
+
+            {/* =========================================
                 FEATURED RESTAURANT
-            ================================= */}
+            =========================================
+            
+                The first restaurant is the featured
+                restaurant.
+
+                Clicking it opens MenuScreen.
+            ========================================= */}
 
             {restaurants.length > 0 && (
+
               <RestaurantBanner
                 restaurant={
                   restaurants[0]
                 }
+
+                onPress={() =>
+                  openMenuScreen(
+                    restaurants[0],
+                  )
+                }
               />
+
             )}
 
-            {/* =================================
-                NEAR YOU
-            ================================= */}
+
+            {/* =========================================
+                NEAR YOU HEADER
+            ========================================= */}
 
             <View
               style={
@@ -191,14 +337,19 @@ const HomeScreen = () => {
                 style={
                   styles.sectionTitle
                 }>
+
                 Near You
+
               </AppText>
+
 
               <AppText
                 style={
                   styles.seeAll
                 }>
+
                 See All
+
               </AppText>
 
             </View>
@@ -206,42 +357,57 @@ const HomeScreen = () => {
           </View>
         }
 
+
         /*
-         * =====================================
+         * =================================================
          * PULL TO REFRESH
-         * =====================================
+         * =================================================
          */
 
         refreshControl={
+
           <RefreshControl
-            refreshing={refreshing}
-            onRefresh={refresh}
+            refreshing={
+              refreshing
+            }
+
+            onRefresh={
+              refresh
+            }
+
             tintColor={
               Colors.orangePrimary
             }
           />
+
         }
 
+
         /*
-         * =====================================
+         * =================================================
          * PAGINATION
-         * =====================================
+         * =================================================
          */
 
         onEndReached={
           loadMore
         }
 
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={
+          0.5
+        }
+
 
         /*
-         * =====================================
+         * =================================================
          * PAGINATION LOADER
-         * =====================================
+         * =================================================
          */
 
         ListFooterComponent={
+
           loadingMore ? (
+
             <ActivityIndicator
               size="small"
               color={
@@ -251,32 +417,47 @@ const HomeScreen = () => {
                 styles.footerLoader
               }
             />
+
           ) : null
+
         }
+
       />
 
     </MainLayout>
   );
 };
 
+
+// =====================================================
+// EXPORT
+// =====================================================
+
 export default HomeScreen;
+
+
+// =====================================================
+// STYLES
+// =====================================================
 
 const styles = StyleSheet.create({
 
-  // =========================================
+  // ===================================================
   // LIST
-  // =========================================
+  // ===================================================
 
   list: {
     paddingHorizontal:
       Spacing.md,
 
-    paddingBottom: 120,
+    paddingBottom:
+      120,
   },
 
-  // =========================================
+
+  // ===================================================
   // INITIAL LOADER
-  // =========================================
+  // ===================================================
 
   loader: {
     flex: 1,
@@ -288,9 +469,10 @@ const styles = StyleSheet.create({
       'center',
   },
 
-  // =========================================
-  // RESTAURANT GRID
-  // =========================================
+
+  // ===================================================
+  // RESTAURANT GRID ROW
+  // ===================================================
 
   row: {
     justifyContent:
@@ -300,9 +482,10 @@ const styles = StyleSheet.create({
       Spacing.md,
   },
 
-  // =========================================
-  // NEAR YOU
-  // =========================================
+
+  // ===================================================
+  // NEAR YOU HEADER
+  // ===================================================
 
   sectionHeader: {
     flexDirection:
@@ -321,6 +504,11 @@ const styles = StyleSheet.create({
       Spacing.lg,
   },
 
+
+  // ===================================================
+  // SECTION TITLE
+  // ===================================================
+
   sectionTitle: {
     fontFamily:
       Fonts.interBold,
@@ -331,6 +519,11 @@ const styles = StyleSheet.create({
     color:
       Colors.black,
   },
+
+
+  // ===================================================
+  // SEE ALL
+  // ===================================================
 
   seeAll: {
     fontFamily:
@@ -343,9 +536,10 @@ const styles = StyleSheet.create({
       Colors.orangePrimary,
   },
 
-  // =========================================
-  // PAGINATION
-  // =========================================
+
+  // ===================================================
+  // PAGINATION LOADER
+  // ===================================================
 
   footerLoader: {
     marginVertical: 20,

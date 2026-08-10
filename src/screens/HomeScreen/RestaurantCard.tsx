@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Alert,
   Image,
@@ -14,24 +15,61 @@ import {
   Fonts,
   Radius,
   Spacing,
-  Typography,
 } from '../../theme';
 
 import {Restaurant} from '../../api/services/restaurantList/Restaurant';
 
 import HeartIcon from '../../assets/icons/ic_favorites.svg';
 
+
+// =====================================================
+// PROPS
+// =====================================================
+
 type Props = {
   restaurant: Restaurant;
+
+  /*
+   * Called when the user taps the restaurant card.
+   *
+   * HomeScreen will use this callback to navigate
+   * to MenuScreen and pass the complete restaurant object.
+   */
+  onPress?: () => void;
 };
 
-const RestaurantCard = ({restaurant}: Props) => {
-  const rating = Number(restaurant.rating ?? 0);
+
+// =====================================================
+// COMPONENT
+// =====================================================
+
+const RestaurantCard = ({
+  restaurant,
+  onPress,
+}: Props) => {
+
+  // ===================================================
+  // RATING
+  // ===================================================
+
+  const rating = Number(
+    restaurant.rating ?? 0,
+  );
+
+
+  // ===================================================
+  // UI
+  // ===================================================
 
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+      activeOpacity={0.92}
+      onPress={onPress}
+      style={styles.card}>
 
-      {/* ================= IMAGE ================= */}
+      {/* =============================================
+          IMAGE
+      ============================================= */}
 
       <View style={styles.imageContainer}>
 
@@ -45,7 +83,13 @@ const RestaurantCard = ({restaurant}: Props) => {
           resizeMode="cover"
         />
 
-        {/* BOOK BUTTON */}
+
+        {/* ===========================================
+            BOOK BUTTON
+
+            This button has its own action, so it
+            remains independent from the card click.
+        =========================================== */}
 
         <TouchableOpacity
           style={styles.bookButton}
@@ -56,12 +100,20 @@ const RestaurantCard = ({restaurant}: Props) => {
               'Booking feature coming soon',
             )
           }>
+
           <AppText style={styles.bookText}>
             Book
           </AppText>
+
         </TouchableOpacity>
 
-        {/* FAVORITE BUTTON */}
+
+        {/* ===========================================
+            FAVORITE BUTTON
+
+            This button also keeps its existing
+            independent behavior.
+        =========================================== */}
 
         <TouchableOpacity
           style={styles.favoriteButton}
@@ -72,40 +124,60 @@ const RestaurantCard = ({restaurant}: Props) => {
               'Added to favourites',
             )
           }>
+
           <HeartIcon
             width={14}
             height={14}
             color={Colors.black}
           />
+
         </TouchableOpacity>
 
       </View>
 
-      {/* ================= CONTENT ================= */}
+
+      {/* =============================================
+          RESTAURANT CONTENT
+      ============================================= */}
 
       <View style={styles.content}>
 
-        {/* RESTAURANT NAME */}
+        {/* ===========================================
+            RESTAURANT NAME
+        =========================================== */}
 
         <AppText
           numberOfLines={1}
           style={styles.name}>
+
           {restaurant.restaurantName}
+
         </AppText>
 
-        {/* CUISINE / DISTANCE */}
+
+        {/* ===========================================
+            CUISINE
+        =========================================== */}
 
         <AppText
           numberOfLines={1}
           style={styles.meta}>
+
           {restaurant.cuisine}
+
         </AppText>
 
-        {/* BOTTOM ROW */}
+
+        {/* ===========================================
+            BOTTOM ROW
+        =========================================== */}
 
         <View style={styles.bottomRow}>
 
-          {/* RATING */}
+          {/* =========================================
+              RATING
+          ========================================= */}
+
           <View style={styles.ratingContainer}>
 
             <AppText style={styles.star}>
@@ -113,18 +185,25 @@ const RestaurantCard = ({restaurant}: Props) => {
             </AppText>
 
             {rating === 0 ? (
+
               <AppText style={styles.rating}>
                 New
               </AppText>
+
             ) : (
+
               <AppText style={styles.rating}>
                 {rating.toFixed(1)}
               </AppText>
+
             )}
 
           </View>
 
-          {/* OPEN STATUS */}
+
+          {/* =========================================
+              OPEN STATUS
+          ========================================= */}
 
           <AppText
             style={[
@@ -132,31 +211,42 @@ const RestaurantCard = ({restaurant}: Props) => {
               !restaurant.openNow &&
                 styles.closedStatus,
             ]}>
-            {restaurant.openNow ? 'Open' : 'Closed'}
+
+            {restaurant.openNow
+              ? 'Open'
+              : 'Closed'}
+
           </AppText>
 
         </View>
 
       </View>
 
-    </View>
+    </TouchableOpacity>
   );
 };
 
-export default React.memo(RestaurantCard);
+
+export default React.memo(
+  RestaurantCard,
+);
+
+
+// =====================================================
+// STYLES
+// =====================================================
 
 const styles = StyleSheet.create({
 
-  /*
-   * =====================================================
-   * CARD
-   * =====================================================
-   */
+  // ===================================================
+  // CARD
+  // ===================================================
 
   card: {
     width: '48%',
 
-    backgroundColor: Colors.white,
+    backgroundColor:
+      Colors.white,
 
     borderRadius: 30,
 
@@ -166,9 +256,11 @@ const styles = StyleSheet.create({
 
     borderColor: '#E7E4E1',
 
-    marginBottom: Spacing.md,
+    marginBottom:
+      Spacing.md,
 
-    shadowColor: Colors.black,
+    shadowColor:
+      Colors.black,
 
     shadowOffset: {
       width: 0,
@@ -182,11 +274,10 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 
-  /*
-   * =====================================================
-   * IMAGE
-   * =====================================================
-   */
+
+  // ===================================================
+  // IMAGE
+  // ===================================================
 
   imageContainer: {
     width: '100%',
@@ -195,28 +286,25 @@ const styles = StyleSheet.create({
 
     position: 'relative',
 
-    backgroundColor: Colors.background200,
+    backgroundColor:
+      Colors.background200,
   },
+
 
   image: {
     width: '100%',
-
     height: '100%',
   },
 
-  /*
-   * =====================================================
-   * BOOK BUTTON
-   * =====================================================
-   *
-   * White pill in top-left.
-   */
+
+  // ===================================================
+  // BOOK BUTTON
+  // ===================================================
 
   bookButton: {
     position: 'absolute',
 
     top: 12,
-
     left: 12,
 
     height: 28,
@@ -227,13 +315,17 @@ const styles = StyleSheet.create({
 
     borderRadius: 28,
 
-    backgroundColor: Colors.white,
+    backgroundColor:
+      Colors.white,
 
-    justifyContent: 'center',
+    justifyContent:
+      'center',
 
-    alignItems: 'center',
+    alignItems:
+      'center',
 
-    shadowColor: Colors.black,
+    shadowColor:
+      Colors.black,
 
     shadowOffset: {
       width: 0,
@@ -247,42 +339,44 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 
-  bookText: {
-    color: Colors.error600,
 
-    fontFamily: Fonts.interBold,
+  bookText: {
+    color:
+      Colors.error600,
+
+    fontFamily:
+      Fonts.interBold,
 
     fontSize: 14,
   },
 
-  /*
-   * =====================================================
-   * FAVORITE BUTTON
-   * =====================================================
-   *
-   * White circular button in top-right.
-   */
+
+  // ===================================================
+  // FAVORITE BUTTON
+  // ===================================================
 
   favoriteButton: {
     position: 'absolute',
 
     top: 10,
-
     right: 10,
 
     width: 32,
-
     height: 32,
 
     borderRadius: 28,
 
-    backgroundColor: Colors.neutral50,
+    backgroundColor:
+      Colors.neutral50,
 
-    justifyContent: 'center',
+    justifyContent:
+      'center',
 
-    alignItems: 'center',
+    alignItems:
+      'center',
 
-    shadowColor: Colors.black,
+    shadowColor:
+      Colors.black,
 
     shadowOffset: {
       width: 0,
@@ -296,332 +390,126 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 
-  /*
-   * =====================================================
-   * CONTENT
-   * =====================================================
-   */
+
+  // ===================================================
+  // CONTENT
+  // ===================================================
 
   content: {
     paddingHorizontal: 8,
     paddingVertical: 12,
   },
 
-  /*
-   * =====================================================
-   * NAME
-   * =====================================================
-   */
+
+  // ===================================================
+  // RESTAURANT NAME
+  // ===================================================
 
   name: {
-    fontFamily: Fonts.interBold,
+    fontFamily:
+      Fonts.interBold,
+
     fontSize: 16,
-    color: Colors.black,
+
+    color:
+      Colors.black,
   },
 
-  /*
-   * =====================================================
-   * META
-   * =====================================================
-   */
+
+  // ===================================================
+  // CUISINE
+  // ===================================================
 
   meta: {
-    fontFamily: Fonts.interRegular,
+    fontFamily:
+      Fonts.interRegular,
+
     fontSize: 10,
+
     lineHeight: 24,
-    color: Colors.neutral600,
+
+    color:
+      Colors.neutral600,
   },
 
-  /*
-   * =====================================================
-   * BOTTOM ROW
-   * =====================================================
-   */
+
+  // ===================================================
+  // BOTTOM ROW
+  // ===================================================
 
   bottomRow: {
     marginTop: 4,
 
-    flexDirection: 'row',
+    flexDirection:
+      'row',
 
-    alignItems: 'center',
+    alignItems:
+      'center',
 
-    justifyContent: 'space-between',
+    justifyContent:
+      'space-between',
   },
 
-  /*
-   * =====================================================
-   * RATING
-   * =====================================================
-   */
+
+  // ===================================================
+  // RATING
+  // ===================================================
 
   ratingContainer: {
-    flexDirection: 'row',
+    flexDirection:
+      'row',
 
-    alignItems: 'center',
+    alignItems:
+      'center',
   },
 
+
   star: {
-    color: Colors.warning600,
+    color:
+      Colors.warning600,
+
     fontSize: 14,
-    fontFamily: Fonts.interBold,
+
+    fontFamily:
+      Fonts.interBold,
 
     marginRight: 8,
   },
 
-  rating: {
-    color: Colors.neutral900,
 
-    fontFamily: Fonts.interBold,
+  rating: {
+    color:
+      Colors.neutral900,
+
+    fontFamily:
+      Fonts.interBold,
 
     fontSize: 14,
   },
 
-  /*
-   * =====================================================
-   * OPEN STATUS
-   * =====================================================
-   */
+
+  // ===================================================
+  // OPEN STATUS
+  // ===================================================
 
   openStatus: {
-    color: Colors.success800,
+    color:
+      Colors.success800,
 
-    fontFamily: Fonts.interSemiBold,
+    fontFamily:
+      Fonts.interSemiBold,
 
     fontSize: 12,
 
     lineHeight: 20,
   },
 
+
   closedStatus: {
     fontSize: 12,
-    color: Colors.error600,
+
+    color:
+      Colors.error600,
   },
+
 });
-
-// import React from 'react';
-// import {
-//   Alert,
-//   Image,
-//   StyleSheet,
-//   TouchableOpacity,
-//   View,
-// } from 'react-native';
-
-// import AppText from '../../component/AppText/AppText';
-// import {
-//   Colors,
-//   Fonts,
-//   Radius,
-//   Spacing,
-//   Typography,
-// } from '../../theme';
-
-// import {Restaurant} from '../../api/services/restaurantList/Restaurant';
-
-// import HeartIcon from '../../assets/icons/ic_favorites.svg';
-// import BookIcon from '../../assets/icons/ic_reservations.svg';
-
-// type Props = {
-//   restaurant: Restaurant;
-// };
-
-// const RestaurantCard = ({restaurant}: Props) => {
-//   return (
-//     <View style={styles.card}>
-//       <View style={styles.imageContainer}>
-//         <Image
-//           source={{
-//             uri:
-//               restaurant.coverImageUrl ||
-//               'https://via.placeholder.com/500x350',
-//           }}
-//           style={styles.image}
-//         />
-
-//         <TouchableOpacity
-//           style={styles.favoriteButton}
-//           onPress={() =>
-//             Alert.alert(
-//               'Favourite',
-//               'Added to favourites',
-//             )
-//           }>
-//           <HeartIcon
-//             width={18}
-//             height={18}
-//             color={Colors.white}
-//           />
-//         </TouchableOpacity>
-
-//         {restaurant.featured && (
-//           <View style={styles.featuredBadge}>
-//             <AppText style={styles.featuredText}>
-//               Featured
-//             </AppText>
-//           </View>
-//         )}
-//       </View>
-
-//       <View style={styles.content}>
-//         <AppText
-//           numberOfLines={1}
-//           style={styles.name}>
-//           {restaurant.restaurantName}
-//         </AppText>
-
-//         <AppText
-//           numberOfLines={2}
-//           style={styles.address}>
-//           {restaurant.address}
-//         </AppText>
-
-//         <View style={styles.bottomRow}>
-//           <View style={styles.ratingContainer}>
-//             <AppText style={styles.rating}>
-//               ⭐ {Number(restaurant.rating ?? 0).toFixed(1)}
-//             </AppText>
-//           </View>
-
-//           <TouchableOpacity
-//             style={styles.bookButton}
-//             onPress={() =>
-//               Alert.alert(
-//                 'Booking',
-//                 'Booking feature coming soon',
-//               )
-//             }>
-//             <BookIcon
-//               width={16}
-//               height={16}
-//               color={Colors.white}
-//             />
-
-//             <AppText style={styles.bookText}>
-//               Book
-//             </AppText>
-//           </TouchableOpacity>
-//         </View>
-//       </View>
-//     </View>
-//   );
-// };
-
-// export default React.memo(RestaurantCard);
-
-// const styles = StyleSheet.create({
-//   card: {
-//     flex: 1,
-//     backgroundColor: Colors.white,
-//     borderRadius: Radius.xl,
-//     overflow: 'hidden',
-//     margin: 6,
-
-//     shadowColor: '#000',
-//     shadowOffset: {
-//       width: 0,
-//       height: 4,
-//     },
-//     shadowOpacity: 0.08,
-//     shadowRadius: 8,
-//     elevation: 4,
-//   },
-
-//   imageContainer: {
-//     position: 'relative',
-//   },
-
-//   image: {
-//     width: '100%',
-//     height: 150,
-//   },
-
-//   favoriteButton: {
-//     position: 'absolute',
-//     right: 10,
-//     top: 10,
-
-//     width: 34,
-//     height: 34,
-
-//     borderRadius: 17,
-//     backgroundColor: 'rgba(0,0,0,0.45)',
-
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-
-//   featuredBadge: {
-//     position: 'absolute',
-//     left: 10,
-//     top: 10,
-
-//     backgroundColor: Colors.orangePrimary,
-
-//     borderRadius: 16,
-//     paddingHorizontal: 10,
-//     paddingVertical: 4,
-//   },
-
-//   featuredText: {
-//     color: Colors.white,
-//     fontSize: Typography.extraSmall,
-//     fontFamily: Fonts.interBold,
-//   },
-
-//   content: {
-//     padding: Spacing.sm,
-//   },
-
-//   name: {
-//     fontFamily: Fonts.interBold,
-//     fontSize: Typography.body,
-//     color: Colors.black,
-//   },
-
-//   address: {
-//     marginTop: 6,
-//     fontSize: Typography.small,
-//     color: Colors.neutral500,
-//     lineHeight: 18,
-//     minHeight: 36,
-//   },
-
-//   bottomRow: {
-//     marginTop: 12,
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//   },
-
-//   ratingContainer: {
-//     backgroundColor: Colors.success700,
-//     borderRadius: 14,
-//     paddingHorizontal: 10,
-//     paddingVertical: 4,
-//   },
-
-//   rating: {
-//     color: Colors.white,
-//     fontFamily: Fonts.interBold,
-//     fontSize: Typography.extraSmall,
-//   },
-
-//   bookButton: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-
-//     backgroundColor: Colors.orangePrimary,
-
-//     borderRadius: 16,
-
-//     paddingHorizontal: 12,
-//     paddingVertical: 6,
-//   },
-
-//   bookText: {
-//     marginLeft: 4,
-//     color: Colors.white,
-//     fontFamily: Fonts.interBold,
-//     fontSize: Typography.small,
-//   },
-// });

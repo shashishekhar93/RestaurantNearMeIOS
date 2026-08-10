@@ -1,7 +1,15 @@
 import type {NavigatorScreenParams} from '@react-navigation/native';
 
-// Root-level routes. The app starts on SplashScreen and then moves through the
-// authentication experience before reaching the main tabbed experience.
+import type {Restaurant} from '../api/services/restaurantList/Restaurant';
+
+
+// ============================================================
+// ROOT NAVIGATION
+// ============================================================
+
+// Root-level routes. The app starts on SplashScreen and then moves
+// through the authentication experience before reaching the main
+// tabbed experience.
 export type RootStackParamList = {
   SplashScreen: undefined;
   OnboardingScreen: undefined;
@@ -14,7 +22,12 @@ export type RootStackParamList = {
   Reward: undefined;
 };
 
-// The tab bar only exposes the five main sections requested by the app.
+
+// ============================================================
+// BOTTOM TABS
+// ============================================================
+
+// The tab bar exposes the five main sections of the application.
 export type BottomTabParamList = {
   Home: undefined;
   Map: undefined;
@@ -23,34 +36,103 @@ export type BottomTabParamList = {
   Account: undefined;
 };
 
-// Each tab is backed by its own stack so future screens can be pushed without
-// mixing routes between tabs.
+
+// ============================================================
+// HOME STACK
+// ============================================================
+
 export type HomeStackParamList = {
+
+  /**
+   * Home screen.
+   */
   HomeScreen: undefined;
+
+
+   /**
+   * Menu screen.
+   *
+   * We pass the complete Restaurant object from HomeScreen.
+   *
+   * This means MenuScreen does NOT need to call the restaurant
+   * API again just to get basic restaurant information.
+   *
+   * It can directly use:
+   *
+   * route.params.restaurant
+   */
+  MenuScreen: {
+    restaurant: Restaurant;
+  };
+
+
+  /**
+   * Restaurant details screen.
+   *
+   * Existing route kept unchanged.
+   */
   RestaurantDetails: {
     restaurantId?: string;
     name?: string;
   } | undefined;
+
+
+  /**
+   * Search screen.
+   */
   Search: undefined;
 };
+
+
+// ============================================================
+// MAP STACK
+// ============================================================
 
 export type MapStackParamList = {
   MapScreen: undefined;
   Search: undefined;
-  RestaurantDetails: {restaurantId?: string; name?: string} | undefined;
+
+  RestaurantDetails: {
+    restaurantId?: string;
+    name?: string;
+  } | undefined;
 };
+
+
+// ============================================================
+// FAVORITES STACK
+// ============================================================
 
 export type FavoritesStackParamList = {
   FavoritesScreen: undefined;
-  RestaurantDetails: {restaurantId?: string; name?: string} | undefined;
+
+  RestaurantDetails: {
+    restaurantId?: string;
+    name?: string;
+  } | undefined;
+
   Search: undefined;
 };
 
+
+// ============================================================
+// RESERVATION STACK
+// ============================================================
+
 export type ReservationStackParamList = {
   ReservationsScreen: undefined;
-  BookingDetails: {bookingId?: string} | undefined;
+
+  BookingDetails: {
+    bookingId?: string;
+  } | undefined;
+
   Search: undefined;
 };
+
+
+// ============================================================
+// ACCOUNT STACK
+// ============================================================
 
 export type AccountStackParamList = {
   AccountScreen: undefined;
@@ -59,7 +141,13 @@ export type AccountStackParamList = {
   HelpFAQ: undefined;
 };
 
-// This is used by the root stack to point to the tab navigator.
-export type RootStackParamListWithTabs = RootStackParamList & {
-  BottomTabs: NavigatorScreenParams<BottomTabParamList>;
-};
+
+// ============================================================
+// ROOT STACK WITH TABS
+// ============================================================
+
+// Used by the root stack to point to the tab navigator.
+export type RootStackParamListWithTabs =
+  RootStackParamList & {
+    BottomTabs: NavigatorScreenParams<BottomTabParamList>;
+  };
