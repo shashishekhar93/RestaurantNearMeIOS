@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   card: {
     width: 370,
 
-    height: 130,
+    height: 110,
 
     flexDirection: 'row',
 
@@ -254,11 +254,11 @@ const styles = StyleSheet.create({
   // ==========================================================
 
   imageContainer: {
-    width: 82,
+    width: 64,
 
-    height: 82,
+    height: 64,
 
-    borderRadius: 41,
+    borderRadius: 32,
 
     overflow: 'hidden',
 
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
 
-    marginTop: 8,
+    marginTop: 4,
   },
 
 
