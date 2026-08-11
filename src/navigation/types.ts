@@ -120,11 +120,97 @@ export type FavoritesStackParamList = {
 // ============================================================
 
 export type ReservationStackParamList = {
+
+  // ==========================================================
+  // RESERVATIONS
+  // ==========================================================
+
   ReservationsScreen: undefined;
+
+
+  // ==========================================================
+  // BOOK TABLE
+  // ==========================================================
+
+  BookTable: undefined;
+
+
+  // ==========================================================
+  // BOOKING DATE & TIME
+  // ==========================================================
+
+  BookTableDate: {
+    guests?: number;
+  };
+
+
+  // ==========================================================
+  // BOOKING SEATING
+  // ==========================================================
+
+  BookTableSeating: {
+    guests?: number;
+    date?: string;
+    time?: string;
+  };
+
+
+  // ==========================================================
+  // BOOKING DETAILS
+  // ==========================================================
+
+  BookTableDetails: {
+    guests?: number;
+    date?: string;
+    time?: string;
+    seating?: string;
+  };
+
+
+  // ==========================================================
+  // BOOKING REVIEW
+  // ==========================================================
+
+  BookTableReview: {
+    guests?: number;
+    date?: string;
+    time?: string;
+    seating?: string;
+    fullName?: string;
+    mobileNumber?: string;
+    email?: string;
+    specialRequests?: string;
+  };
+
+
+  // ==========================================================
+  // BOOKING SUCCESS
+  // ==========================================================
+
+  BookingSuccess: {
+    guests?: number;
+    date?: string;
+    time?: string;
+    seating?: string;
+    fullName?: string;
+    mobileNumber?: string;
+    email?: string;
+    specialRequests?: string;
+  };
+
+
+  // ==========================================================
+  // EXISTING BOOKING DETAILS
+  // ==========================================================
 
   BookingDetails: {
     bookingId?: string;
   } | undefined;
+
+
+  // ==========================================================
+  // SEARCH
+  // ==========================================================
 
   Search: undefined;
 };

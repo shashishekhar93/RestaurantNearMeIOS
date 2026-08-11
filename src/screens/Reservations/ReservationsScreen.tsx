@@ -11,6 +11,19 @@ import {
   View,
 } from 'react-native';
 
+import {
+  useNavigation,
+} from '@react-navigation/native';
+
+import type {
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
+
+import type {
+  ReservationStackParamList,
+} from '../../navigation/types';
+
+
 import MainLayout from '../../component/MainLayout';
 import AppText from '../../component/AppText/AppText';
 
@@ -106,10 +119,19 @@ const pastReservations: Reservation[] = [
 ];
 
 // ============================================================
+type NavigationProp =
+  NativeStackNavigationProp<
+    ReservationStackParamList,
+    'ReservationsScreen'
+  >;
+
+// ============================================================
 // SCREEN
 // ============================================================
 
 const ReservationsScreen = () => {
+  const navigation = useNavigation<NavigationProp>();
+
   const [selectedTab, setSelectedTab] =
     useState<ReservationTab>('All');
 
@@ -163,7 +185,10 @@ const ReservationsScreen = () => {
               activeOpacity={0.85}
               style={
                 styles.bookButton
-              }>
+              }
+              onPress={() =>
+              navigation.navigate('BookTable')
+            }>
 
               <AppText
                 style={
