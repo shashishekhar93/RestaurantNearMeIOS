@@ -700,7 +700,7 @@ const MapScreen = () => {
 
             {
               bottom:
-                tabBarHeight,
+                tabBarHeight+45,
             },
           ]}>
 
