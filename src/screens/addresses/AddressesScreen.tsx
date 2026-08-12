@@ -50,7 +50,7 @@ import BackButton from '../../assets/icons/ic_back.svg';
 type NavigationProp =
   NativeStackNavigationProp<
     AccountStackParamList,
-    'AddressesScreen'
+    'SavedAddresses'
   >;
 
 

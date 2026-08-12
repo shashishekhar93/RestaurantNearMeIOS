@@ -31,6 +31,7 @@ const accountItems = [
   {
     label: 'Personal Information',
     Icon: PersonalInfoIcon,
+    route: 'PersonalInformationScreen',
   },
   {
     label: 'Saved Addresses',

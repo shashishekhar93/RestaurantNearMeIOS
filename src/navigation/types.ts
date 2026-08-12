@@ -223,16 +223,16 @@ export type ReservationStackParamList = {
 export type AccountStackParamList = {
   AccountScreen: undefined;
 
-  EditProfile: undefined;
+  PersonalInformationScreen: undefined;
 
   SavedAddresses: undefined;
 
-  AddressesScreen: undefined;
-
   AddNewAddressScreen: undefined;
 
+  EditProfile: undefined;
+
   HelpFAQ: undefined;
-};  
+};
 
 // ============================================================
 // ROOT STACK WITH TABS
