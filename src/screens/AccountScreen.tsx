@@ -28,9 +28,19 @@ const rewards = [
 ];
 
 const accountItems = [
-  {label: 'Personal Information', Icon: PersonalInfoIcon},
-  {label: 'Saved Addresses', Icon: AddressesIcon},
-  {label: 'Help & FAQ', Icon: HelpAndFaq},
+  {
+    label: 'Personal Information',
+    Icon: PersonalInfoIcon,
+  },
+  {
+    label: 'Saved Addresses',
+    Icon: AddressesIcon,
+    route: 'AddressesScreen',
+  },
+  {
+    label: 'Help & FAQ',
+    Icon: HelpAndFaq,
+  },
 ];
 
 // Props for AccountScreen. ParentScreen will pass `onOpenWallet` to show the WalletScreen.
@@ -181,7 +191,12 @@ const AccountScreen = ({onOpenWallet, onOpenRewards}: Props) => {
                     styles.listItem,
                     index === accountItems.length - 1 && styles.lastListItem,
                 ]}
-                activeOpacity={0.8}>
+                activeOpacity={0.8}            
+                onPress={() => {
+                  if (item.route) {
+                    navigation.navigate(item.route);
+                  }
+                }}>
                 <View style={styles.listItemLeft}>
                     <item.Icon
                     width={24}
