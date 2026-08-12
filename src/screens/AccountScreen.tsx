@@ -41,6 +41,7 @@ const accountItems = [
   {
     label: 'Help & FAQ',
     Icon: HelpAndFaq,
+    route: 'FAQScreen'
   },
 ];
 

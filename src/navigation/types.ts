@@ -231,7 +231,7 @@ export type AccountStackParamList = {
 
   EditProfile: undefined;
 
-  HelpFAQ: undefined;
+  FAQScreen: undefined;
 };
 
 // ============================================================
