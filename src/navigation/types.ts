@@ -203,10 +203,22 @@ export type ReservationStackParamList = {
   // EXISTING BOOKING DETAILS
   // ==========================================================
 
-  BookingDetails: {
-    bookingId?: string;
-  } | undefined;
-
+    BookingDetails: {
+      reservation: {
+        id: string;
+        restaurantName: string;
+        cuisine: string;
+        seating: string;
+        date: string;
+        time: string;
+        guests: number;
+        status:
+          | 'CONFIRMED'
+          | 'PENDING'
+          | 'COMPLETED'
+          | 'CANCELLED';
+      };
+    };
 
   // ==========================================================
   // SEARCH

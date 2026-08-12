@@ -415,6 +415,15 @@ const ReservationsScreen = () => {
                       reservation={
                         reservation
                       }
+
+                      onPress={() =>
+                        navigation.navigate(
+                          'BookingDetails',
+                          {
+                            reservation,
+                          },
+                        )
+                      }
                     />
                   ),
                 )}
@@ -450,6 +459,15 @@ const ReservationsScreen = () => {
                       reservation={
                         reservation
                       }
+
+                      onPress={() =>
+                        navigation.navigate(
+                          'BookingDetails',
+                          {
+                            reservation,
+                          },
+                        )
+                      }
                     />
                   ),
                 )}
@@ -470,10 +488,11 @@ const ReservationsScreen = () => {
 
 type ReservationCardProps = {
   reservation: Reservation;
+  onPress:() =>void
 };
 
 const ReservationCard = ({
-  reservation,
+  reservation,onPress
 }: ReservationCardProps) => {
 
   const statusColors =
@@ -484,6 +503,7 @@ const ReservationCard = ({
   return (
     <TouchableOpacity
       activeOpacity={0.85}
+      onPress={onPress}
       style={
         styles.reservationCard
       }>

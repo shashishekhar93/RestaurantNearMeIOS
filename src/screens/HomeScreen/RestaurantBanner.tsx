@@ -18,6 +18,7 @@ import {
 } from '../../theme';
 
 import {Restaurant} from '../../api/services/restaurantList/Restaurant';
+import StarIcon from '../../assets/icons/ic_star.svg';
 
 
 // =====================================================
@@ -162,13 +163,27 @@ const RestaurantBanner = ({
         pointerEvents="none"
         style={styles.ratingContainer}>
 
-        <AppText style={styles.star}>
-          ★
-        </AppText>
+        <StarIcon width={14}
+        height={14}/>
 
-        <AppText style={styles.ratingText}>
+        {/* <AppText style={styles.ratingText}>
           {rating.toFixed(1)}
-        </AppText>
+        </AppText> */}
+
+        {rating === 0 ? (
+
+              <AppText style={styles.ratingText}>
+                New
+              </AppText>
+
+            ) : (
+
+              <AppText style={styles.ratingText}>
+                {rating.toFixed(1)}
+              </AppText>
+
+            )}
+
 
       </View>
 
@@ -359,15 +374,9 @@ const styles = StyleSheet.create({
 
 
   ratingText: {
-    color:
-      Colors.black,
-
-    fontSize: 18,
-
-    lineHeight: 24,
-
-    fontFamily:
-      Fonts.interBold,
+    color:Colors.black,
+    fontSize: 14,
+    fontFamily:Fonts.interBold,
   },
 
 
@@ -377,13 +386,10 @@ const styles = StyleSheet.create({
 
   bottomContent: {
     position: 'absolute',
-
     left: Spacing.xl,
     right: Spacing.xl,
-
     bottom: Spacing.xl,
   },
-
 
   // =========================================
   // CUISINE

@@ -32,6 +32,8 @@ import BookingSuccessScreen
 import PlaceholderScreen
   from './PlaceholderScreen';
 
+  import ReservationDetailScreen
+  from '../screens/Reservations/ReservationDetailScreen';
 
 // ============================================================
 // NAVIGATOR
@@ -41,22 +43,6 @@ const Stack =
   createNativeStackNavigator<
     ReservationStackParamList
   >();
-
-
-// ============================================================
-// BOOKING DETAILS
-// ============================================================
-
-const BookingDetailsScreen = () => {
-
-  return (
-    <PlaceholderScreen
-      title="Booking Details"
-      description="Reservation details can be added here later."
-    />
-  );
-};
-
 
 // ============================================================
 // SEARCH
@@ -176,7 +162,7 @@ const ReservationStackNavigator = () => {
       <Stack.Screen
         name="BookingDetails"
         component={
-          BookingDetailsScreen
+          ReservationDetailScreen
         }
       />
 

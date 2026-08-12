@@ -20,6 +20,7 @@ import {
 import {Restaurant} from '../../api/services/restaurantList/Restaurant';
 
 import HeartIcon from '../../assets/icons/ic_favorites.svg';
+import StarIcon from '../../assets/icons/ic_star.svg';
 
 
 // =====================================================
@@ -180,9 +181,7 @@ const RestaurantCard = ({
 
           <View style={styles.ratingContainer}>
 
-            <AppText style={styles.star}>
-              ★
-            </AppText>
+            <StarIcon/>
 
             {rating === 0 ? (
 
@@ -478,6 +477,7 @@ const styles = StyleSheet.create({
 
 
   rating: {
+    marginLeft:4,
     color:
       Colors.neutral900,
 
