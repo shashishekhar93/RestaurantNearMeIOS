@@ -25,11 +25,11 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RestaurantsNearMeIOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RestaurantsNearMeIOS/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		156D1BBD065646844D35FEDA /* Pods-RestaurantsNearMeIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestaurantsNearMeIOS.debug.xcconfig"; path = "Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS.debug.xcconfig"; sourceTree = "<group>"; };
-		19693511FDD0402BB6D7F3B9 /* inter_semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = inter_semibold.ttf; path = ../src/assets/inter_semibold.ttf; sourceTree = "<group>"; };
-		2BCAEE24C9C644C99273D41B /* inter_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = inter_medium.ttf; path = ../src/assets/inter_medium.ttf; sourceTree = "<group>"; };
-		66C3DDD26F4D4AC9AE517995 /* inter_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = inter_bold.ttf; path = ../src/assets/inter_bold.ttf; sourceTree = "<group>"; };
+		19693511FDD0402BB6D7F3B9 /* inter_semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = inter_semibold.ttf; path = ../src/assets/inter_semibold.ttf; sourceTree = "<group>"; };
+		2BCAEE24C9C644C99273D41B /* inter_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = inter_medium.ttf; path = ../src/assets/inter_medium.ttf; sourceTree = "<group>"; };
+		66C3DDD26F4D4AC9AE517995 /* inter_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = inter_bold.ttf; path = ../src/assets/inter_bold.ttf; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RestaurantsNearMeIOS/AppDelegate.swift; sourceTree = "<group>"; };
-		7DDEC82929FD4A6396CEBAB0 /* inter_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = inter_regular.ttf; path = ../src/assets/inter_regular.ttf; sourceTree = "<group>"; };
+		7DDEC82929FD4A6396CEBAB0 /* inter_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = inter_regular.ttf; path = ../src/assets/inter_regular.ttf; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RestaurantsNearMeIOS/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E141459E8BFF37783A349EF4 /* libPods-RestaurantsNearMeIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RestaurantsNearMeIOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -77,7 +77,6 @@
 				66C3DDD26F4D4AC9AE517995 /* inter_bold.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -216,9 +215,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -233,9 +236,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RestaurantsNearMeIOS/Pods-RestaurantsNearMeIOS-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
