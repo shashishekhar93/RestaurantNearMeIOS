@@ -72,6 +72,19 @@ const BottomTabNavigator = () => {
 
       initialRouteName="Home"
 
+
+      // screenListeners={({navigation}) => ({
+      //   tabPress: e => {
+      //     const target = e.target;
+
+      //     if (target?.includes('-Reservations-')) {
+      //       navigation.navigate('Reservations', {
+      //         screen: 'ReservationsScreen',
+      //       });
+      //     }
+      //   },
+      // })}
+
       screenOptions={({route}) => {
 
         // ======================================================
@@ -93,6 +106,9 @@ const BottomTabNavigator = () => {
           focusedRoute !== undefined &&
           focusedRoute !== 'ReservationsScreen';
 
+        const isMenuScreen =
+          route.name === 'Home' &&
+          focusedRoute === 'MenuScreen';
 
         return {
 
@@ -154,6 +170,10 @@ const BottomTabNavigator = () => {
             // ==================================================
 
             isBookingFlow && {
+              display: 'none',
+            },
+            // Hide tab bar on restaurant menu
+            isMenuScreen && {
               display: 'none',
             },
           ],
@@ -278,7 +298,7 @@ const BottomTabNavigator = () => {
           RESERVATIONS
       ====================================================== */}
 
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Reservations"
         component={
           ReservationStackNavigator
@@ -286,8 +306,24 @@ const BottomTabNavigator = () => {
         options={{
           title: 'Reservations',
         }}
-      />
+      /> */}
 
+      <BottomTab.Screen
+        name="Reservations"
+        component={ReservationStackNavigator}
+        options={{
+          title: 'Reservations',
+        }}
+        listeners={({navigation}) => ({
+          tabPress: e => {
+            e.preventDefault();
+
+            navigation.navigate('Reservations', {
+              screen: 'ReservationsScreen',
+            });
+          },
+        })}
+      />
 
       {/* ======================================================
           ACCOUNT

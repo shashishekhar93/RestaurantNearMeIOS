@@ -1,55 +1,120 @@
 import React, {useEffect} from 'react';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator, type NativeStackScreenProps} from '@react-navigation/native-stack';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  View,
+} from 'react-native';
+
+import {
+  NavigationContainer,
+} from '@react-navigation/native';
+
+import {
+  createNativeStackNavigator,
+  type NativeStackScreenProps,
+} from '@react-navigation/native-stack';
+
 import OnboardingScreen from '../screens/OnboardingScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-import {Colors, Fonts, Spacing, Typography} from '../theme';
+
+import {
+  Colors,
+  Fonts,
+  Spacing,
+  Typography,
+} from '../theme';
+
 import BottomTabNavigator from './BottomTabNavigator';
+
 import WalletScreen from '../screens/WalletScreen';
-import type {RootStackParamList} from './types';
-import AppText from '../component/AppText';
 import NotificationScreen from '../screens/notification/NotificationScreen';
 import RewardScreen from '../screens/Rewards/RewardScreen';
-const RootStack = createNativeStackNavigator<RootStackParamList>();
-type SplashScreenProps = NativeStackScreenProps<RootStackParamList, 'SplashScreen'>;
-type OnboardingRouteProps = NativeStackScreenProps<RootStackParamList, 'OnboardingScreen'>;
-type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
-type OTPScreenProps = NativeStackScreenProps<RootStackParamList, 'OTPScreen'>;
-type LocationPermissionScreenProps = NativeStackScreenProps<RootStackParamList, 'LocationPermissionScreen'>;
+
+import type {RootStackParamList} from './types';
+
+import AppText from '../component/AppText';
+
 import VerifyOtpScreen from '../screens/loginFlow/VerifyOtpScreen';
+
 import {SessionManager} from '../utils/SessionManager';
 
-// SplashScreen shows a short loading state before moving to onboarding.
-const SplashScreen = ({navigation}: SplashScreenProps) => {
+const RootStack =
+  createNativeStackNavigator<RootStackParamList>();
+
+type SplashScreenProps =
+  NativeStackScreenProps<
+    RootStackParamList,
+    'SplashScreen'
+  >;
+
+type OnboardingRouteProps =
+  NativeStackScreenProps<
+    RootStackParamList,
+    'OnboardingScreen'
+  >;
+
+type LoginScreenProps =
+  NativeStackScreenProps<
+    RootStackParamList,
+    'LoginScreen'
+  >;
+
+// ============================================================
+// SPLASH
+// ============================================================
+
+const SplashScreen = ({
+  navigation,
+}: SplashScreenProps) => {
+
   useEffect(() => {
     checkLogin();
   }, []);
+
   const checkLogin = async () => {
-      await new Promise<void>((resolve) => {
+
+    await new Promise<void>(resolve => {
       setTimeout(() => {
         resolve();
       }, 1200);
-});
+    });
 
     const token =
       await SessionManager.getAccessToken();
 
-    const userId = await SessionManager.getUserId();
-      console.log('========== SESSION DEBUG ==========');
-      console.log('USER ID:', userId);
-      console.log('AUTH TOKEN:', token);
-      console.log('===================================');
+    const userId =
+      await SessionManager.getUserId();
+
+    console.log(
+      '========== SESSION DEBUG ==========',
+    );
+
+    console.log(
+      'USER ID:',
+      userId,
+    );
+
+    console.log(
+      'AUTH TOKEN:',
+      token,
+    );
+
+    console.log(
+      '===================================',
+    );
+
     if (token) {
       navigation.replace('BottomTabs');
     } else {
-      navigation.replace('OnboardingScreen');
+      navigation.replace(
+        'OnboardingScreen',
+      );
     }
   };
 
   return (
-
-    <View style={styles.centeredContainer}>
+    <View
+      style={styles.centeredContainer}>
 
       <AppText style={styles.logoText}>
         Restaurants Near Me
@@ -61,92 +126,362 @@ const SplashScreen = ({navigation}: SplashScreenProps) => {
       />
 
     </View>
-
   );
-
 };
 
-// The onboarding screen remains unchanged in UI and simply routes the user to
-// the next authentication step.
-const OnboardingScreenRoute = ({navigation}: OnboardingRouteProps) => {
+// ============================================================
+// ONBOARDING
+// ============================================================
+
+const OnboardingScreenRoute = ({
+  navigation,
+}: OnboardingRouteProps) => {
+
   return (
     <OnboardingScreen
-      onGetStarted={() => navigation.navigate('LoginScreen')}
-      onLoginSuccess={() => navigation.navigate('BottomTabs')}
+
+      /*
+       * Get Started
+       *
+       * Goes directly into the signup flow.
+       *
+       * SignUpScreen itself starts on the
+       * location permission step.
+       */
+      onGetStarted={() =>
+        navigation.navigate(
+          'LoginScreen',
+        )
+      }
+
+      /*
+       * This callback is used by the existing
+       * LoginBottomSheet.
+       */
+      onLoginSuccess={() => {
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'BottomTabs',
+            },
+          ],
+        });
+      }}
     />
   );
 };
 
-// LoginScreen uses the existing sign-up UI as a wrapper so the current design
-// is preserved while the route is now part of the navigation flow.
-const LoginScreenRoute = ({navigation}: LoginScreenProps) => {
+// ============================================================
+// SIGNUP
+// ============================================================
+
+const LoginScreenRoute = ({
+  navigation,
+}: LoginScreenProps) => {
+
   return (
     <SignUpScreen
-      onSignedIn={() => navigation.navigate('OTPScreen')}
+
+      /*
+       * Successful signup.
+       *
+       * SessionManager has already stored
+       * the session inside SignUpScreen.
+       */
+      onSignedIn={() => {
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'BottomTabs',
+            },
+          ],
+        });
+      }}
+
+      /*
+       * "Already have an account? Log in"
+       *
+       * Return to onboarding where the existing
+       * LoginBottomSheet is available.
+       */
+      onLoginPress={() => {
+        navigation.navigate(
+          'OnboardingScreen',
+        );
+      }}
     />
   );
 };
 
-
-// LocationPermissionScreen reuses the existing location flow without changing its UI.
-const LocationPermissionScreenRoute = ({navigation}: LocationPermissionScreenProps) => {
-  return (
-    <SignUpScreen
-      onSignedIn={() => navigation.replace('BottomTabs')}
-    />
-  );
-};
+// ============================================================
+// ROOT NAVIGATOR
+// ============================================================
 
 const RootNavigator = () => {
+
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="SplashScreen" screenOptions={{headerShown: false}}>
-        <RootStack.Screen name="SplashScreen" component={SplashScreen} />
-        <RootStack.Screen name="OnboardingScreen" component={OnboardingScreenRoute} />
-        <RootStack.Screen name="LoginScreen" component={LoginScreenRoute} />
-        <RootStack.Screen name="OTPScreen" component={VerifyOtpScreen} />
-        <RootStack.Screen name="LocationPermissionScreen" component={LocationPermissionScreenRoute} />
-        <RootStack.Screen name="Wallet" component={WalletScreen} />
-        <RootStack.Screen name="Notification" component={NotificationScreen} />
-        <RootStack.Screen name="Reward" component={RewardScreen} />
-        <RootStack.Screen name="BottomTabs" component={BottomTabNavigator} />
+
+      <RootStack.Navigator
+        initialRouteName="SplashScreen"
+        screenOptions={{
+          headerShown: false,
+        }}>
+
+        <RootStack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+        />
+
+        <RootStack.Screen
+          name="OnboardingScreen"
+          component={
+            OnboardingScreenRoute
+          }
+        />
+
+        {/*
+
+          This route is now the COMPLETE
+          signup flow:
+
+          Step 1:
+          Location
+
+          Step 2:
+          Create Account
+
+        */}
+        <RootStack.Screen
+          name="LoginScreen"
+          component={LoginScreenRoute}
+        />
+
+        {/* Existing login OTP screen */}
+        <RootStack.Screen
+          name="OTPScreen"
+          component={VerifyOtpScreen}
+        />
+
+        <RootStack.Screen
+          name="Wallet"
+          component={WalletScreen}
+        />
+
+        <RootStack.Screen
+          name="Notification"
+          component={
+            NotificationScreen
+          }
+        />
+
+        <RootStack.Screen
+          name="Reward"
+          component={RewardScreen}
+        />
+
+        <RootStack.Screen
+          name="BottomTabs"
+          component={
+            BottomTabNavigator
+          }
+        />
+
       </RootStack.Navigator>
+
     </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
+
   centeredContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: Spacing.lg,
-    backgroundColor: Colors.mainBackground,
+    backgroundColor:
+      Colors.mainBackground,
   },
+
   logoText: {
     fontSize: Typography.h1,
     fontFamily: Fonts.interBold,
     color: Colors.neutral900,
     marginBottom: Spacing.md,
   },
-  title: {
-    fontSize: Typography.h2,
-    fontFamily: Fonts.interBold,
-    color: Colors.neutral900,
-    marginBottom: Spacing.sm,
-  },
-  description: {
-    fontSize: Typography.body,
-    fontFamily: Fonts.interRegular,
-    color: Colors.neutral600,
-    marginBottom: Spacing.md,
-    textAlign: 'center',
-  },
-  actionText: {
-    fontSize: Typography.body,
-    fontFamily: Fonts.interSemiBold,
-    color: Colors.primary600,
-  },
+
 });
 
 export default RootNavigator;
+
+// import React, {useEffect} from 'react';
+// import {ActivityIndicator, StyleSheet, View} from 'react-native';
+// import {NavigationContainer} from '@react-navigation/native';
+// import {createNativeStackNavigator, type NativeStackScreenProps} from '@react-navigation/native-stack';
+// import OnboardingScreen from '../screens/OnboardingScreen';
+// import SignUpScreen from '../screens/SignUpScreen';
+// import {Colors, Fonts, Spacing, Typography} from '../theme';
+// import BottomTabNavigator from './BottomTabNavigator';
+// import WalletScreen from '../screens/WalletScreen';
+// import type {RootStackParamList} from './types';
+// import AppText from '../component/AppText';
+// import NotificationScreen from '../screens/notification/NotificationScreen';
+// import RewardScreen from '../screens/Rewards/RewardScreen';
+// const RootStack = createNativeStackNavigator<RootStackParamList>();
+// type SplashScreenProps = NativeStackScreenProps<RootStackParamList, 'SplashScreen'>;
+// type OnboardingRouteProps = NativeStackScreenProps<RootStackParamList, 'OnboardingScreen'>;
+// type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
+// type OTPScreenProps = NativeStackScreenProps<RootStackParamList, 'OTPScreen'>;
+// type LocationPermissionScreenProps = NativeStackScreenProps<RootStackParamList, 'LocationPermissionScreen'>;
+// import VerifyOtpScreen from '../screens/loginFlow/VerifyOtpScreen';
+// import {SessionManager} from '../utils/SessionManager';
+
+// // SplashScreen shows a short loading state before moving to onboarding.
+// const SplashScreen = ({navigation}: SplashScreenProps) => {
+//   useEffect(() => {
+//     checkLogin();
+//   }, []);
+//   const checkLogin = async () => {
+//       await new Promise<void>((resolve) => {
+//       setTimeout(() => {
+//         resolve();
+//       }, 1200);
+// });
+
+//     const token =
+//       await SessionManager.getAccessToken();
+
+//     const userId = await SessionManager.getUserId();
+//       console.log('========== SESSION DEBUG ==========');
+//       console.log('USER ID:', userId);
+//       console.log('AUTH TOKEN:', token);
+//       console.log('===================================');
+//     if (token) {
+//       navigation.replace('BottomTabs');
+//     } else {
+//       navigation.replace('OnboardingScreen');
+//     }
+//   };
+
+//   return (
+
+//     <View style={styles.centeredContainer}>
+
+//       <AppText style={styles.logoText}>
+//         Restaurants Near Me
+//       </AppText>
+
+//       <ActivityIndicator
+//         size="large"
+//         color={Colors.primary600}
+//       />
+
+//     </View>
+
+//   );
+
+// };
+
+// // The onboarding screen remains unchanged in UI and simply routes the user to
+// // the next authentication step.
+// const OnboardingScreenRoute = ({navigation}: OnboardingRouteProps) => {
+//   return (
+//     <OnboardingScreen
+//       onGetStarted={() => navigation.navigate('LoginScreen')}
+//       onLoginSuccess={() => navigation.navigate('BottomTabs')}
+//     />
+//   );
+// };
+
+// // LoginScreen uses the existing sign-up UI as a wrapper so the current design
+// // is preserved while the route is now part of the navigation flow.
+// // const LoginScreenRoute = ({navigation}: LoginScreenProps) => {
+// //   return (
+// //     <SignUpScreen
+// //       onSignedIn={() => navigation.navigate('OTPScreen')}
+// //     />
+// //   );
+// // };
+// const LoginScreenRoute = ({navigation}: LoginScreenProps) => {
+//   return (
+//     <SignUpScreen
+//       onSignedIn={() => {
+//         navigation.reset({
+//           index: 0,
+//           routes: [
+//             {
+//               name: 'BottomTabs',
+//             },
+//           ],
+//         });
+//       }}
+//     />
+//   );
+// };
+
+
+// // LocationPermissionScreen reuses the existing location flow without changing its UI.
+// const LocationPermissionScreenRoute = ({navigation}: LocationPermissionScreenProps) => {
+//   return (
+//     <SignUpScreen
+//       onSignedIn={() => navigation.replace('BottomTabs')}
+//     />
+//   );
+// };
+
+// const RootNavigator = () => {
+//   return (
+//     <NavigationContainer>
+//       <RootStack.Navigator initialRouteName="SplashScreen" screenOptions={{headerShown: false}}>
+//         <RootStack.Screen name="SplashScreen" component={SplashScreen} />
+//         <RootStack.Screen name="OnboardingScreen" component={OnboardingScreenRoute} />
+//         <RootStack.Screen name="LoginScreen" component={LoginScreenRoute} />
+//         <RootStack.Screen name="OTPScreen" component={VerifyOtpScreen} />
+//         <RootStack.Screen name="LocationPermissionScreen" component={LocationPermissionScreenRoute} />
+//         <RootStack.Screen name="Wallet" component={WalletScreen} />
+//         <RootStack.Screen name="Notification" component={NotificationScreen} />
+//         <RootStack.Screen name="Reward" component={RewardScreen} />
+//         <RootStack.Screen name="BottomTabs" component={BottomTabNavigator} />
+//       </RootStack.Navigator>
+//     </NavigationContainer>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   centeredContainer: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     padding: Spacing.lg,
+//     backgroundColor: Colors.mainBackground,
+//   },
+//   logoText: {
+//     fontSize: Typography.h1,
+//     fontFamily: Fonts.interBold,
+//     color: Colors.neutral900,
+//     marginBottom: Spacing.md,
+//   },
+//   title: {
+//     fontSize: Typography.h2,
+//     fontFamily: Fonts.interBold,
+//     color: Colors.neutral900,
+//     marginBottom: Spacing.sm,
+//   },
+//   description: {
+//     fontSize: Typography.body,
+//     fontFamily: Fonts.interRegular,
+//     color: Colors.neutral600,
+//     marginBottom: Spacing.md,
+//     textAlign: 'center',
+//   },
+//   actionText: {
+//     fontSize: Typography.body,
+//     fontFamily: Fonts.interSemiBold,
+//     color: Colors.primary600,
+//   },
+// });
+
+// export default RootNavigator;

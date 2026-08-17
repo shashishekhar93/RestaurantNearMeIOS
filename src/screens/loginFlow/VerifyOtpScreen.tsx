@@ -129,32 +129,45 @@ const VerifyOtpScreen = ({navigation, route}: Props) => {
 
       setLoading(false);
 
-      if (response.status === 1) {
-        await SessionManager.saveSession(response.data);
+      // if (response.status === 1) {
+      //   await SessionManager.saveSession(response.data);
 
-            Geolocation.getCurrentPosition(
-                () => {
-                    navigation.reset({
-                    index: 0,
-                    routes: [
-                      {
-                        name: 'BottomTabs',
-                      },
-                    ],
-                  });
-                },
-                () => {
-                    navigation.reset({
-                    index: 0,
-                    routes: [
-                      {
-                        name: 'LocationPermissionScreen',
-                      },
-                    ],
-                  });
-                },
-            );
-      } else {
+      //       Geolocation.getCurrentPosition(
+      //           () => {
+      //               navigation.reset({
+      //               index: 0,
+      //               routes: [
+      //                 {
+      //                   name: 'BottomTabs',
+      //                 },
+      //               ],
+      //             });
+      //           },
+      //           () => {
+      //               navigation.reset({
+      //               index: 0,
+      //               routes: [
+      //                 {
+      //                   name: 'LocationPermissionScreen',
+      //                 },
+      //               ],
+      //             });
+      //           },
+      //       );
+      // } 
+      if (response.status === 1) {
+          await SessionManager.saveSession(response.data);
+
+          navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'BottomTabs',
+              },
+            ],
+          });
+        }
+      else {
         Alert.alert(
           'Error',
           response.error ?? 'Invalid OTP',

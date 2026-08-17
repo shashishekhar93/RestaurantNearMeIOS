@@ -20,6 +20,10 @@ import PersonalInformationScreen
   import FAQScreen
   from '../screens/faq/FAQScreen';
 
+  import AddressesScreen
+  from '../screens/addresses/AddressesScreen';
+
+
 
 // ============================================================
 // NAVIGATOR
@@ -67,36 +71,6 @@ const EditProfileScreen = () => {
     <PlaceholderScreen
       title="Edit Profile"
       description="Use this route to manage profile updates later."
-    />
-  );
-};
-
-
-// ============================================================
-// SAVED ADDRESSES
-// ============================================================
-
-const SavedAddressesScreen = () => {
-
-  return (
-    <PlaceholderScreen
-      title="Saved Addresses"
-      description="This route can host address management later."
-    />
-  );
-};
-
-
-// ============================================================
-// HELP & FAQ
-// ============================================================
-
-const HelpFAQScreen = () => {
-
-  return (
-    <PlaceholderScreen
-      title="Help & FAQ"
-      description="Add support content here in the future."
     />
   );
 };
@@ -155,9 +129,9 @@ const AccountStackNavigator = () => {
       ====================================================== */}
 
       <Stack.Screen
-        name="SavedAddresses"
+        name="AddressesScreen"
         component={
-          SavedAddressesScreen
+          AddressesScreen
         }
       />
 

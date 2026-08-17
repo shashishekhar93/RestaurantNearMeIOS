@@ -15,7 +15,6 @@ export type RootStackParamList = {
   OnboardingScreen: undefined;
   LoginScreen: undefined;
   OTPScreen: {phoneNumber?: string} | undefined;
-  LocationPermissionScreen: undefined;
   BottomTabs: undefined;
   Wallet: undefined;
   Notification: undefined;
@@ -32,7 +31,8 @@ export type BottomTabParamList = {
   Home: undefined;
   Map: undefined;
   Favorites: undefined;
-  Reservations: undefined;
+  //Reservations: undefined;
+  Reservations: NavigatorScreenParams<ReservationStackParamList>;
   Account: undefined;
 };
 
@@ -65,6 +65,9 @@ export type HomeStackParamList = {
     restaurant: Restaurant;
   };
 
+   BookTable: {
+    restaurant: Restaurant;
+  };
 
   /**
    * Restaurant details screen.
@@ -132,7 +135,10 @@ export type ReservationStackParamList = {
   // BOOK TABLE
   // ==========================================================
 
-  BookTable: undefined;
+  BookTable: {
+    source: 'menu' | 'reservations';
+    restaurant?: Restaurant;
+  };
 
 
   // ==========================================================
@@ -237,7 +243,7 @@ export type AccountStackParamList = {
 
   PersonalInformationScreen: undefined;
 
-  SavedAddresses: undefined;
+  AddressesScreen: undefined;
 
   AddNewAddressScreen: undefined;
 

@@ -8,12 +8,9 @@ import {
   View,
 } from 'react-native';
 
-import {
-  useNavigation,
-} from '@react-navigation/native';
 
 import type {
-  NativeStackNavigationProp,
+  NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 
 import type {
@@ -47,8 +44,8 @@ import {
 // NAVIGATION
 // ============================================================
 
-type NavigationProp =
-  NativeStackNavigationProp<
+type Props =
+  NativeStackScreenProps<
     ReservationStackParamList,
     'BookTable'
   >;
@@ -57,11 +54,10 @@ type NavigationProp =
 // ============================================================
 // SCREEN
 // ============================================================
-
-const BookTableScreen = () => {
-
-  const navigation =
-    useNavigation<NavigationProp>();
+    const BookTableScreen = ({
+      navigation,
+      route,
+    }: Props) => {
 
 
   // ==========================================================
@@ -93,11 +89,29 @@ const BookTableScreen = () => {
   // BACK
   // ==========================================================
 
+  // const handleBack = () => {
+
+  //   navigation.goBack();
+
+  // };
+
   const handleBack = () => {
+      if (route.params.source === 'menu') {
+        navigation
+          .getParent()
+          ?.navigate('Home', {
+            screen: 'MenuScreen',
+            params: {
+              restaurant: route.params.restaurant,
+            },
+          });
 
-    navigation.goBack();
+        return;
+      }
 
-  };
+      navigation.goBack();
+    };
+
 
 
   // ==========================================================

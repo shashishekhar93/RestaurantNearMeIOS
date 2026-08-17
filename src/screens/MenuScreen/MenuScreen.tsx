@@ -644,6 +644,17 @@ const MenuScreen = ({
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.primaryButton}
+                onPress={() =>
+                  navigation
+                    .getParent()
+                    ?.navigate('Reservations', {
+                      screen: 'BookTable',
+                      params: {
+                        restaurant,
+                        source:'menu'
+                      },
+                    })
+                }
               >
                 <View style={styles.primaryButtonContent}>
 

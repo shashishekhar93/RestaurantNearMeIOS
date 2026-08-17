@@ -187,7 +187,9 @@ const ReservationsScreen = () => {
                 styles.bookButton
               }
               onPress={() =>
-              navigation.navigate('BookTable')
+              navigation.navigate('BookTable', {
+                source: 'reservations',
+              })
             }>
 
               <AppText
